@@ -1,0 +1,55 @@
+{
+  "scenario_id": "italy_avalanche_rome",
+  "name": "Avalanche to Rome 1943-1944 (Southern & Central Italy)",
+  "display_name_zh": "1943–1944 萨莱诺至罗马：古斯塔夫防线与安齐奥（中小型剧本蓝图）",
+  "description": "专注意大利中南部的 40 回合战役剧本蓝图：涵盖萨莱诺、那不勒斯、福贾机场群、塔兰托、卡西诺古斯塔夫防线、安齐奥登陆与罗马解放。",
+  "upstream_base": "WITW+WITE v0.9.60",
+  "target_game_version": "WiTE2 v1.05.02",
+  "campaign_mode": false,
+  "start_date": "1943-09-09",
+  "turns": 40,
+  "master_map_dimensions": {
+    "width": 378,
+    "height": 355,
+    "total_hexes": 134190
+  },
+  "map_nw_limit": [122, 246],
+  "map_se_limit": [172, 296],
+  "playable_bounds_note": "实际可玩区 X: 122..171 (50列), Y: 246..295 (50行)，合计 2,500 格，较全图削减 98.14% 面积。",
+  "high_command_anchor": {
+    "axis": {
+      "preferred_city": "Rome / North Edge",
+      "xy": [137, 255],
+      "note": "开局阶段轴心南意高司可锚定于罗马以北（如 135,248），确保不与战斗格堆叠"
+    },
+    "allied": {
+      "preferred_city": "Palermo / Messina",
+      "xy": [143, 286],
+      "note": "突尼斯坐标(126,297)位于本框南缘外1格，故本中小型剧本将盟军高司锚定在巴勒莫(143,286)或西西里基地"
+    }
+  },
+  "key_landmarks_verified": [
+    {"name": "Pescara", "xy": [146, 251]},
+    {"name": "Rome", "xy": [137, 255]},
+    {"name": "Foggia", "xy": [154, 258]},
+    {"name": "Anzio", "xy": [138, 259]},
+    {"name": "Bari", "xy": [161, 260]},
+    {"name": "Naples", "xy": [147, 263]},
+    {"name": "Brindisi", "xy": [166, 263]},
+    {"name": "Taranto", "xy": [163, 264]},
+    {"name": "Salerno", "xy": [149, 265]},
+    {"name": "Messina", "xy": [155, 284]},
+    {"name": "Reggio Calabria", "xy": [156, 285]},
+    {"name": "Palermo", "xy": [143, 286]},
+    {"name": "Catania", "xy": [153, 290]}
+  ],
+  "victory_objectives": [
+    {"city": "Rome", "xy": [137, 255], "vp": 40},
+    {"city": "Anzio", "xy": [138, 259], "vp": 10},
+    {"city": "Naples", "xy": [147, 263], "vp": 15},
+    {"city": "Foggia", "xy": [154, 258], "vp": 12},
+    {"city": "Taranto", "xy": [163, 264], "vp": 8},
+    {"city": "Salerno", "xy": [149, 265], "vp": 8},
+    {"city": "Pescara", "xy": [146, 251], "vp": 7}
+  ]
+}

@@ -1,0 +1,72 @@
+{
+  "scenario_id": "italy_husky_43",
+  "name": "Operation Husky 1943 (Sicily Standalone)",
+  "display_name_zh": "1943 哈士奇行动：西西里登陆（极速减负小剧本）",
+  "description": "仅覆盖突尼斯东北、马耳他、西西里岛与卡拉布里亚南端的 8 回合独立登陆小剧本，直接继承上游 v0.9.60 已验证的 shape2 滩头与 7 支空降预案。",
+  "upstream_base": "WITW+WITE v0.9.60",
+  "target_game_version": "WiTE2 v1.05.02",
+  "campaign_mode": false,
+  "start_date": "1943-07-03",
+  "turns": 8,
+  "master_map_dimensions": {
+    "width": 378,
+    "height": 355,
+    "total_hexes": 134190
+  },
+  "map_nw_limit": [118, 275],
+  "map_se_limit": [166, 314],
+  "playable_bounds_note": "实际可玩区 X: 118..165 (48列), Y: 275..313 (39行)，合计 1,872 格，较全图削减 98.60% 面积。",
+  "high_command_anchor": {
+    "axis": {
+      "preferred_city": "Messina / Reggio Calabria",
+      "xy": [156, 285],
+      "note": "小剧本轴心高司锚点置于卡拉布里亚雷焦（156,285）或墨西拿，确保全 HQ 链在 48x39 框内"
+    },
+    "allied": {
+      "preferred_city": "Tunis / Bizerte",
+      "xy": [126, 297],
+      "note": "AFHQ / 15th Army Group 位于突尼斯/比塞大方向"
+    }
+  },
+  "events_policy": {
+    "disable_italian_armistice": true,
+    "note": "8 回合西西里小剧本应停用 1943 年 9 月 8 日意大利停战自动撤军事件，防止尾声回合意军整建制消失影响独立评分。"
+  },
+  "husky_validation": {
+    "board_shape": 2,
+    "rejected_inland_target": [149, 293],
+    "landings": [
+      {"tf_id": 13055, "name": "TF 86 (45th Inf Div)", "target": [146, 293], "sea_approach": [146, 294]},
+      {"tf_id": 13058, "name": "TF 81 (1st Inf Div)", "target": [147, 293], "sea_approach": [147, 294]},
+      {"tf_id": 13061, "name": "TF 85 (3rd Inf Div)", "target": [149, 294], "sea_approach": [148, 295]},
+      {"tf_id": 13064, "name": "TF 545(A) (1st Can Div)", "target": [154, 296], "sea_approach": [154, 297]},
+      {"tf_id": 13067, "name": "TF 545(B) (5th/50th Div)", "target": [154, 293], "sea_approach": [155, 293]},
+      {"tf_id": 13070, "name": "TF 545(C) (51st Highland)", "target": [153, 295], "sea_approach": [154, 295]}
+    ],
+    "airborne_plans": [
+      {"id": 11542, "unit": "1/82nd", "target": [146, 292], "supporting_tf": 13055},
+      {"id": 11543, "unit": "2/82nd", "target": [148, 293], "supporting_tf": 13058},
+      {"id": 11544, "unit": "3/82nd", "target": [149, 293], "supporting_tf": 13061},
+      {"id": 11546, "unit": "1/1st", "target": [153, 294], "supporting_tf": 13070},
+      {"id": 11547, "unit": "2/1st", "target": [152, 295], "supporting_tf": 13070},
+      {"id": 11548, "unit": "3/1st", "target": [154, 294], "supporting_tf": 13067},
+      {"id": 11774, "unit": "509th", "target": [147, 292], "supporting_tf": 13055}
+    ]
+  },
+  "key_landmarks_verified": [
+    {"name": "Messina", "xy": [155, 284]},
+    {"name": "Reggio Calabria", "xy": [156, 285]},
+    {"name": "Palermo", "xy": [143, 286]},
+    {"name": "Catania", "xy": [153, 290]},
+    {"name": "Bizerte", "xy": [123, 293]},
+    {"name": "Gela", "xy": [148, 293]},
+    {"name": "Tunis", "xy": [126, 297]},
+    {"name": "Valletta", "xy": [150, 303]}
+  ],
+  "victory_objectives": [
+    {"city": "Messina", "xy": [155, 284], "vp": 25},
+    {"city": "Palermo", "xy": [143, 286], "vp": 20},
+    {"city": "Catania", "xy": [153, 290], "vp": 15},
+    {"city": "Gela", "xy": [148, 293], "vp": 5}
+  ]
+}

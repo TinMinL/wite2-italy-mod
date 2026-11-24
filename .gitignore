@@ -1,0 +1,20 @@
+# 上游二进制文件、原社区包副本与本地构建输出不推送至 Git
+source/
+output/
+release/
+*.scn
+*.sav
+*.tga
+
+# Python 缓存与测试产物
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.coverage
+
+# 临时文件与系统文件
+*.tmp
+*.bak
+.DS_Store
+Thumbs.db

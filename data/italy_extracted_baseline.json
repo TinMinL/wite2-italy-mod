@@ -1,0 +1,693 @@
+{
+  "upstream_version": "WITW+WITE v0.9.60",
+  "campaign_bounds": {
+    "nw": [
+      104,
+      208
+    ],
+    "se": [
+      176,
+      318
+    ]
+  },
+  "husky_bounds": {
+    "nw": [
+      118,
+      275
+    ],
+    "se": [
+      166,
+      314
+    ]
+  },
+  "victory_points": {
+    "italy_city_count": 16,
+    "italy_base_vp_sum": 124,
+    "cities": [
+      {
+        "region": "Italy",
+        "id": 545,
+        "city": "Rome",
+        "base_vp": 30,
+        "xy": [
+          137,
+          255
+        ],
+        "source_group": "previous28_added_objectives"
+      },
+      {
+        "region": "Italy",
+        "id": 541,
+        "city": "Milan",
+        "base_vp": 16,
+        "xy": [
+          120,
+          227
+        ],
+        "source_group": "previous28_added_objectives"
+      },
+      {
+        "region": "Italy",
+        "id": 533,
+        "city": "Naples",
+        "base_vp": 16,
+        "xy": [
+          147,
+          263
+        ],
+        "source_group": "previous28_added_objectives"
+      },
+      {
+        "region": "Italy",
+        "id": 540,
+        "city": "Turin",
+        "base_vp": 6,
+        "xy": [
+          113,
+          230
+        ],
+        "source_group": "previous28_added_objectives"
+      },
+      {
+        "region": "Italy",
+        "id": 542,
+        "city": "Genoa",
+        "base_vp": 6,
+        "xy": [
+          119,
+          235
+        ],
+        "source_group": "previous28_added_objectives"
+      },
+      {
+        "region": "Italy",
+        "id": 678,
+        "city": "Venice",
+        "base_vp": 6,
+        "xy": [
+          136,
+          227
+        ],
+        "source_group": "previous28_added_objectives"
+      },
+      {
+        "region": "Italy",
+        "id": 613,
+        "city": "Bologna",
+        "base_vp": 6,
+        "xy": [
+          131,
+          235
+        ],
+        "source_group": "previous28_added_objectives"
+      },
+      {
+        "region": "Italy",
+        "id": 544,
+        "city": "Florence",
+        "base_vp": 6,
+        "xy": [
+          131,
+          240
+        ],
+        "source_group": "previous28_added_objectives"
+      },
+      {
+        "region": "Italy",
+        "id": 566,
+        "city": "Palermo",
+        "base_vp": 4,
+        "xy": [
+          143,
+          286
+        ],
+        "source_group": "previous28_added_objectives"
+      },
+      {
+        "region": "Italy",
+        "id": 558,
+        "city": "Messina",
+        "base_vp": 4,
+        "xy": [
+          155,
+          284
+        ],
+        "source_group": "previous28_added_objectives"
+      },
+      {
+        "region": "Balkans",
+        "id": 3467,
+        "city": "Zagreb",
+        "base_vp": 6,
+        "xy": [
+          153,
+          223
+        ],
+        "source_group": "previous28_added_objectives"
+      },
+      {
+        "region": "Balkans",
+        "id": 3466,
+        "city": "Ljubljana",
+        "base_vp": 4,
+        "xy": [
+          146,
+          222
+        ],
+        "source_group": "previous28_added_objectives"
+      },
+      {
+        "region": "Balkans",
+        "id": 3469,
+        "city": "Sarajevo",
+        "base_vp": 4,
+        "xy": [
+          166,
+          237
+        ],
+        "source_group": "previous28_added_objectives"
+      },
+      {
+        "region": "Balkans",
+        "id": 3471,
+        "city": "Split",
+        "base_vp": 4,
+        "xy": [
+          157,
+          241
+        ],
+        "source_group": "previous28_added_objectives"
+      },
+      {
+        "id": 3649,
+        "city": "Mulhouse",
+        "region": "France",
+        "xy": [
+          112,
+          209
+        ],
+        "base_vp": 3,
+        "source_group": "revised52_industrial_objectives"
+      },
+      {
+        "id": 3613,
+        "city": "Grenoble",
+        "region": "France",
+        "xy": [
+          104,
+          229
+        ],
+        "base_vp": 3,
+        "source_group": "revised52_industrial_objectives"
+      }
+    ]
+  },
+  "husky": {
+    "board_shape": 2,
+    "root_cause": "Earlier offline checks used shape3 column parity; the actual native board is shape2 row parity.149,293 is inland; the original-1 sea cache was correct.",
+    "landings": {
+      "13055": {
+        "target": [
+          146,
+          293
+        ],
+        "sea_approach": [
+          146,
+          294
+        ]
+      },
+      "13058": {
+        "target": [
+          147,
+          293
+        ],
+        "sea_approach": [
+          147,
+          294
+        ]
+      },
+      "13061": {
+        "target": [
+          149,
+          294
+        ],
+        "sea_approach": [
+          148,
+          295
+        ]
+      },
+      "13064": {
+        "target": [
+          154,
+          296
+        ],
+        "sea_approach": [
+          154,
+          297
+        ]
+      },
+      "13067": {
+        "target": [
+          154,
+          293
+        ],
+        "sea_approach": [
+          155,
+          293
+        ]
+      },
+      "13070": {
+        "target": [
+          153,
+          295
+        ],
+        "sea_approach": [
+          154,
+          295
+        ]
+      }
+    },
+    "airborne_plans": [
+      {
+        "id": 11542,
+        "target": [
+          146,
+          292
+        ],
+        "supporting_tf": 13055,
+        "role": "Optional reserve plan; moved off the new TF81 beach"
+      },
+      {
+        "id": 11543,
+        "target": [
+          148,
+          293
+        ],
+        "supporting_tf": 13058,
+        "role": "Optional reserve plan"
+      },
+      {
+        "id": 11544,
+        "target": [
+          149,
+          293
+        ],
+        "supporting_tf": 13061,
+        "role": "Initial US505th combat-team abstraction; original inland Gela/Piano Lupo area"
+      },
+      {
+        "id": 11546,
+        "target": [
+          153,
+          294
+        ],
+        "supporting_tf": 13070,
+        "role": "Optional reserve plan"
+      },
+      {
+        "id": 11547,
+        "target": [
+          152,
+          295
+        ],
+        "supporting_tf": 13070,
+        "role": "Optional reserve plan; avoids Canadian commando landing space"
+      },
+      {
+        "id": 11548,
+        "target": [
+          154,
+          294
+        ],
+        "supporting_tf": 13067,
+        "role": "Ladbroke glider-assault abstraction"
+      },
+      {
+        "id": 11774,
+        "target": [
+          147,
+          292
+        ],
+        "supporting_tf": 13055,
+        "role": "Optional509th reserve plan; not a historical Husky drop"
+      }
+    ],
+    "assault_divisions": 7,
+    "independent_brigades": 1,
+    "hq_relocations": [
+      {
+        "id": 11505,
+        "name": "II US Corps",
+        "before_xy": [
+          62,
+          300
+        ],
+        "after_xy": [
+          150,
+          303
+        ],
+        "before_distance_to_new_beach": 87,
+        "after_distance_to_new_beach": 10,
+        "hq_type": 3,
+        "parent": 11442
+      },
+      {
+        "id": 11442,
+        "name": "Seventh US Army",
+        "before_xy": [
+          69,
+          299
+        ],
+        "after_xy": [
+          150,
+          303
+        ],
+        "before_distance_to_new_beach": 80,
+        "after_distance_to_new_beach": 10,
+        "hq_type": 3,
+        "parent": 11427
+      },
+      {
+        "id": 11427,
+        "name": "15th Army Group",
+        "before_xy": [
+          84,
+          295
+        ],
+        "after_xy": [
+          123,
+          293
+        ],
+        "before_distance_to_new_beach": 65,
+        "after_distance_to_new_beach": 26,
+        "hq_type": 2,
+        "parent": 11419
+      }
+    ],
+    "airborne_eligibility_note": [
+      {
+        "id": 11542,
+        "native_size": 3,
+        "native_eligibility": 1
+      },
+      {
+        "id": 11543,
+        "native_size": 3,
+        "native_eligibility": 1
+      },
+      {
+        "id": 11544,
+        "native_size": 3,
+        "native_eligibility": 1
+      },
+      {
+        "id": 11546,
+        "native_size": 5,
+        "native_eligibility": 1
+      },
+      {
+        "id": 11547,
+        "native_size": 5,
+        "native_eligibility": 1
+      },
+      {
+        "id": 11548,
+        "native_size": 5,
+        "native_eligibility": 1
+      },
+      {
+        "id": 11774,
+        "native_size": 3,
+        "native_eligibility": 1
+      }
+    ]
+  },
+  "reinforcements_summary": {
+    "total_upstream_ground": 1010,
+    "ground_with_xy_in_italy_campaign_bounds": 13,
+    "ground_with_xy_in_husky_bounds": 12,
+    "ground_keyword_only_outside_bounds": 8,
+    "total_upstream_air": 198,
+    "air_med_keyword_matches": 1,
+    "note": "许多盟军未来增援先进入英国/北非兼容落点，因此按坐标筛出的是直接标定意大利/突尼斯/马耳他落点的子集；完整筛选需在 Export CSV 后由 crop_csv.py 结合 HQ 链与基地坐标判定。",
+    "sample_ground_in_bounds": [
+      {
+        "source_id": 2026,
+        "id": 11423,
+        "name": "1st Tabor Goums FF Mountain Regiment",
+        "source_delay": 18,
+        "date": "1943-11-06",
+        "delay": 0,
+        "frozen": 18,
+        "xy": [
+          126,
+          297
+        ],
+        "parent": 11535
+      },
+      {
+        "source_id": 2030,
+        "id": 11426,
+        "name": "3rd Tabor Goums FF Mountain Regiment",
+        "source_delay": 18,
+        "date": "1943-11-06",
+        "delay": 0,
+        "frozen": 18,
+        "xy": [
+          127,
+          297
+        ],
+        "parent": 11535
+      },
+      {
+        "source_id": 2040,
+        "id": 11688,
+        "name": "Liberazione AI Infantry Corpo",
+        "source_delay": 41,
+        "date": "1944-04-15",
+        "delay": 0,
+        "frozen": 41,
+        "xy": [
+          121,
+          294
+        ],
+        "parent": 11419
+      },
+      {
+        "source_id": 2042,
+        "id": 11690,
+        "name": "'Cremona' AI Combat Group",
+        "source_delay": 63,
+        "date": "1944-09-16",
+        "delay": 0,
+        "frozen": 63,
+        "xy": [
+          120,
+          297
+        ],
+        "parent": 11419
+      },
+      {
+        "source_id": 2043,
+        "id": 11691,
+        "name": "'Folgore' AI Combat Group",
+        "source_delay": 86,
+        "date": "1945-02-24",
+        "delay": 0,
+        "frozen": 86,
+        "xy": [
+          120,
+          297
+        ],
+        "parent": 11419
+      },
+      {
+        "source_id": 2044,
+        "id": 11692,
+        "name": "'Friuli' AI Combat Group",
+        "source_delay": 82,
+        "date": "1945-01-27",
+        "delay": 0,
+        "frozen": 82,
+        "xy": [
+          118,
+          295
+        ],
+        "parent": 11419
+      },
+      {
+        "source_id": 2045,
+        "id": 11693,
+        "name": "'Legnano' AI Combat Group",
+        "source_delay": 86,
+        "date": "1945-02-24",
+        "delay": 0,
+        "frozen": 86,
+        "xy": [
+          116,
+          296
+        ],
+        "parent": 11419
+      },
+      {
+        "source_id": 2046,
+        "id": 11694,
+        "name": "'Mantova' AI Combat Group",
+        "source_delay": 66,
+        "date": "1944-10-07",
+        "delay": 0,
+        "frozen": 66,
+        "xy": [
+          118,
+          295
+        ],
+        "parent": 11419
+      },
+      {
+        "source_id": 2047,
+        "id": 11695,
+        "name": "'Piceno' AI Combat Group",
+        "source_delay": 66,
+        "date": "1944-10-07",
+        "delay": 0,
+        "frozen": 66,
+        "xy": [
+          118,
+          295
+        ],
+        "parent": 11419
+      },
+      {
+        "source_id": 2138,
+        "id": 11785,
+        "name": "43rd Mot. IN Gurkha Brigade",
+        "source_delay": 54,
+        "date": "1944-07-15",
+        "delay": 0,
+        "frozen": 54,
+        "xy": [
+          121,
+          294
+        ],
+        "parent": 11419
+      },
+      {
+        "source_id": 2140,
+        "id": 11787,
+        "name": "1st AI Motorized Group",
+        "source_delay": 12,
+        "date": "1943-09-25",
+        "delay": 0,
+        "frozen": 12,
+        "xy": [
+          121,
+          294
+        ],
+        "parent": 11419
+      },
+      {
+        "source_id": 2149,
+        "id": 11796,
+        "name": "473rd Sep. US Infantry Regiment",
+        "source_delay": 80,
+        "date": "1945-01-13",
+        "delay": 0,
+        "frozen": 80,
+        "xy": [
+          127,
+          297
+        ],
+        "parent": 11419
+      },
+      {
+        "source_id": 2596,
+        "id": 12243,
+        "name": "201st North African FF Pioneer Regiment",
+        "source_delay": 18,
+        "date": "1943-11-06",
+        "delay": 0,
+        "frozen": 18,
+        "xy": [
+          127,
+          297
+        ],
+        "parent": 11535
+      }
+    ]
+  },
+  "axis_reserves": {
+    "total_changes_records": 33,
+    "italy_related_records": []
+  },
+  "commanders_italy_related": [
+    {
+      "hq": 11460,
+      "hq_name": "XII Troop Carrier Command",
+      "source_leader": 1506,
+      "alias": 3558,
+      "first_name": "Paul L.",
+      "name": "Williams",
+      "source": "https://media.defense.gov/2017/Apr/07/2001728568/-1/-1/0/B_0021_MILLER_AIRLIFT_DOCTRINE.PDF",
+      "historical_note": "Paul L. Williams commanded the Mediterranean troop-carrier organization represented by the imported XII Troop Carrier Command.",
+      "availability_adjustments": [],
+      "ratings_rank_special_and_max_command_preserved": true,
+      "frozen_weeks": 0
+    }
+  ],
+  "opening_stocks_italy_samples_count": 1,
+  "manpower_and_logistics_baseline": {
+    "upstream_allied_total_allowance": 1960000,
+    "upstream_allied_initial_allowance": 250000,
+    "upstream_logistics_stages": [
+      {
+        "date": "1943-07-03",
+        "nominal_extra_supply_tons": 112500,
+        "nominal_extra_fuel_tons": 60000.0,
+        "nominal_extra_trucks": 880,
+        "nominal_extra_armaments_points": 30000,
+        "nominal_extra_resources_tons": 1093750,
+        "resources_needed_by_extra_HI": 787500,
+        "nominal_extra_crude_tons": 120000,
+        "crude_needed_by_extra_refining": 120000,
+        "extra_supply_used_by_trucks_and_armaments": 10400
+      },
+      {
+        "date": "1944-01-01",
+        "nominal_extra_supply_tons": 202500,
+        "nominal_extra_fuel_tons": 90000.0,
+        "nominal_extra_trucks": 1980,
+        "nominal_extra_armaments_points": 60000,
+        "nominal_extra_resources_tons": 1443750,
+        "resources_needed_by_extra_HI": 1417500,
+        "nominal_extra_crude_tons": 180000,
+        "crude_needed_by_extra_refining": 180000,
+        "extra_supply_used_by_trucks_and_armaments": 21900
+      },
+      {
+        "date": "1944-09-01",
+        "nominal_extra_supply_tons": 202500,
+        "nominal_extra_fuel_tons": 90000.0,
+        "nominal_extra_trucks": 880,
+        "nominal_extra_armaments_points": 60000,
+        "nominal_extra_resources_tons": 1443750,
+        "resources_needed_by_extra_HI": 1417500,
+        "nominal_extra_crude_tons": 180000,
+        "crude_needed_by_extra_refining": 180000,
+        "extra_supply_used_by_trucks_and_armaments": 16400
+      },
+      {
+        "date": "1945-01-01",
+        "nominal_extra_supply_tons": 275500,
+        "nominal_extra_fuel_tons": 110000.0,
+        "nominal_extra_trucks": 3520,
+        "nominal_extra_armaments_points": 75000,
+        "nominal_extra_resources_tons": 1968750,
+        "resources_needed_by_extra_HI": 1928500,
+        "nominal_extra_crude_tons": 220000,
+        "crude_needed_by_extra_refining": 220000,
+        "extra_supply_used_by_trucks_and_armaments": 32600
+      }
+    ],
+    "italy_only_scaling_note": "上游数值覆盖西欧+地中海双线；纯意大利战役需在编辑器中按战区兵力比例下调至约 25%~35%，并为已移除德国本土工厂后的轴心方补充战区月度人力事件。"
+  }
+}

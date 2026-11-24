@@ -1,0 +1,95 @@
+{
+  "scenario_id": "italy_campaign_43_45",
+  "name": "Italy Campaign 1943-1945 (Cropped Theater)",
+  "display_name_zh": "1943–1945 意大利战役（纯意大利减负大剧本）",
+  "description": "从 1943 年 7 月 3 日西西里登陆起至 1945 年 5 月波河谷/阿尔卑斯山终战的纯意大利战区大剧本，基于 WITW+WITE v0.9.60 通过裁剪可玩地图区域并清空东线/西欧后勤实体实现电脑减负。",
+  "upstream_base": "WITW+WITE v0.9.60",
+  "target_game_version": "WiTE2 v1.05.02",
+  "campaign_mode": false,
+  "campaign_mode_note": "必须设为 false（非 Campaign 模式）！WitE2 的 Campaign 模式硬编码柏林陷落胜负判定，纯意大利地图不包含柏林，必须使用自定义城市 VP 胜负档位。",
+  "start_date": "1943-07-03",
+  "turns": 96,
+  "master_map_dimensions": {
+    "width": 378,
+    "height": 355,
+    "total_hexes": 134190
+  },
+  "map_nw_limit": [104, 208],
+  "map_se_limit": [176, 318],
+  "playable_bounds_note": "WitE2 Map SE Limit 实际生效范围为 [NW_x .. SE_x - 1, NW_y .. SE_y - 1]，即 X: 104..175 (72列), Y: 208..317 (110行)，合计 7,920 格，较全图削减 94.10% 面积。",
+  "high_command_anchor": {
+    "axis": {
+      "preferred_city": "Bologna / Verona",
+      "xy": [131, 235],
+      "note": "原 OKH/OKW 位于柏林等框外城市，裁剪后须迁入北意重镇以免编辑器居中及指挥链报错"
+    },
+    "allied": {
+      "preferred_city": "Tunis / Bizerte",
+      "xy": [126, 297],
+      "note": "AFHQ / 西方盟军高司锚点设为突尼斯（若原处于阿尔及尔或伦敦等框外点则迁移至此）"
+    }
+  },
+  "theatre_boxes": {
+    "active_map_only": true,
+    "disabled_boxes": [
+      "Eastern Front",
+      "Western Europe",
+      "Balkans",
+      "Italy Box"
+    ],
+    "note": "所有非地图战区盒清空并关闭，清除单位残留 thBoxLock。"
+  },
+  "logistics_and_shipping_guidance": {
+    "shipping_pool_note": "上游 v0.9.60 全欧双线有 600 运兵船 / 2000 货船（映射于 UI 的 Ladoga 栏）；纯意大利单线建议缩减至约 180~240 运兵船、600~800 货船，避免跨海无限投送。",
+    "allied_manpower_scale_note": "上游 196 万盟军拨款含诺曼底与西欧主力；纯意大利战役建议按 25%~35% 比例（约 50~70 万人分期拨付）校准，避免北意变成无限填线肉磨。",
+    "german_manpower_note": "关闭德国本土框外人力工厂后，德军补充兵必须改为通过剧本事件按月定额拨入国家池（参考上游 v0.9.56/v0.9.57 意大利部分：约 69,100~98,200 人或按战斗强度调优）。",
+    "armistice_1943_09_08": "保留 1943 年 9 月 8 日意大利停战事件作为核心历史节点，同时需补充 RSI（意大利社会共和国）留存或新编轴心部队安排。"
+  },
+  "key_landmarks_verified": [
+    {"name": "Bolzano", "xy": [131, 219]},
+    {"name": "Trieste", "xy": [143, 225]},
+    {"name": "Milan", "xy": [120, 227]},
+    {"name": "Verona", "xy": [129, 227]},
+    {"name": "Venice", "xy": [136, 227]},
+    {"name": "Turin", "xy": [113, 230]},
+    {"name": "Genoa", "xy": [119, 235]},
+    {"name": "Bologna", "xy": [131, 235]},
+    {"name": "Florence", "xy": [131, 240]},
+    {"name": "Livorno", "xy": [126, 242]},
+    {"name": "Ancona", "xy": [142, 242]},
+    {"name": "Bastia", "xy": [122, 250]},
+    {"name": "Ajaccio", "xy": [118, 255]},
+    {"name": "Rome", "xy": [137, 255]},
+    {"name": "Foggia", "xy": [154, 258]},
+    {"name": "Anzio", "xy": [138, 259]},
+    {"name": "Bari", "xy": [161, 260]},
+    {"name": "Naples", "xy": [147, 263]},
+    {"name": "Brindisi", "xy": [166, 263]},
+    {"name": "Taranto", "xy": [163, 264]},
+    {"name": "Salerno", "xy": [149, 265]},
+    {"name": "Cagliari", "xy": [119, 277]},
+    {"name": "Messina", "xy": [155, 284]},
+    {"name": "Reggio Calabria", "xy": [156, 285]},
+    {"name": "Palermo", "xy": [143, 286]},
+    {"name": "Catania", "xy": [153, 290]},
+    {"name": "Bizerte", "xy": [123, 293]},
+    {"name": "Gela", "xy": [148, 293]},
+    {"name": "Tunis", "xy": [126, 297]},
+    {"name": "Valletta", "xy": [150, 303]}
+  ],
+  "victory_objectives": [
+    {"city": "Rome", "xy": [137, 255], "vp": 30},
+    {"city": "Milan", "xy": [120, 227], "vp": 20},
+    {"city": "Naples", "xy": [147, 263], "vp": 16},
+    {"city": "Bologna", "xy": [131, 235], "vp": 12},
+    {"city": "Turin", "xy": [113, 230], "vp": 10},
+    {"city": "Genoa", "xy": [119, 235], "vp": 10},
+    {"city": "Venice", "xy": [136, 227], "vp": 10},
+    {"city": "Florence", "xy": [131, 240], "vp": 10},
+    {"city": "Trieste", "xy": [143, 225], "vp": 8},
+    {"city": "Foggia", "xy": [154, 258], "vp": 8},
+    {"city": "Taranto", "xy": [163, 264], "vp": 6},
+    {"city": "Palermo", "xy": [143, 286], "vp": 6},
+    {"city": "Messina", "xy": [155, 284], "vp": 6}
+  ]
+}
