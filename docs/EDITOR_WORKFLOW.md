@@ -8,10 +8,10 @@
 
 ## 第 0 步：在 New Editor 中导出母版 CSV（已完成时可跳过）
 
-1. 将 `意大利mod\source\witw-wite-v0.9.60\Dat\Scen\WITW+WITE v0.9.60.scn` 和同名 `.txt` 复制到游戏 `Dat\Scen\`。
-2. 启动 `WarInTheEast2.exe` → **Editor**（选 **New Editor**）→ **Load Scenario** 加载 `WITW+WITE v0.9.60`。
+1. 将 `意大利mod\source\witw-wite-v0.9.65\Dat\Scen\WITW+WITE v0.9.65.scn` 和同名 `.txt` 复制到游戏 `Dat\Scen\`。
+2. 启动 `WarInTheEast2.exe` → **Editor**（选 **New Editor**）→ **Load Scenario** 加载 `WITW+WITE v0.9.65`。
 3. 切到最右侧紫色条纹的 **`CSV`** 标签页，全选后点击 **Export to CSV**。
-4. 导出文件会落在游戏目录 `Dat\CSV\WITW+WITE v0.9.60\` 下（共 20 个 `.csv` 文件）。
+4. 导出文件会落在游戏目录 `Dat\CSV\WITW+WITE v0.9.65\` 下（共 20 个 `.csv` 文件）。
 
 ---
 
@@ -20,7 +20,7 @@
 ```powershell
 # 西西里小剧本
 python 意大利mod/tools/crop_csv.py `
-  --input-dir "Dat/CSV/WITW+WITE v0.9.60" `
+  --input-dir "Dat/CSV/WITW+WITE v0.9.65" `
   --config "意大利mod/config/italy_husky_43.json" `
   --output-dir "意大利mod/output/Italy_Husky_43" `
   --relocate-offmap-hqs `
@@ -32,7 +32,7 @@ python 意大利mod/tools/validate_csv.py `
 
 # 意大利战役大剧本
 python 意大利mod/tools/crop_csv.py `
-  --input-dir "Dat/CSV/WITW+WITE v0.9.60" `
+  --input-dir "Dat/CSV/WITW+WITE v0.9.65" `
   --config "意大利mod/config/italy_campaign_43_45.json" `
   --output-dir "意大利mod/output/Italy_Campaign_43_45" `
   --relocate-offmap-hqs `
@@ -59,8 +59,8 @@ python -m wite2_tools.cli gen-orphans --nat-codes 1 3
 
 > ⚠️ **官方手册铁律**：点击 `Import from CSV` 前，务必关闭 Excel、VS Code 预览或任何打开了这些 `.csv` 的程序，否则编辑器会报 **`FAILED`**！
 
-1. 在游戏 `Dat\CSV\` 下新建文件夹（或直接用工作剧本名，例如先在编辑器把 `WITW+WITE v0.9.60.scn` **另存为 `Italy_Husky_43.scn`**，记住不要覆盖母版！）。
-2. 把 `意大利mod\output\Italy_Husky_43\` 里的 **20 个 `.csv` 文件** 全部复制到 `Dat\CSV\Italy_Husky_43\`（目录名须与你当前加载的 `.scn` 剧本名一致！如果刚才还没另存，可先在加载 `Italy_Husky_43` 后点一次 `Export to CSV` 让编辑器建出准确同名目录，再覆盖进去）。
+1. 在游戏 `Dat\CSV\` 下新建文件夹（或直接用工作剧本名，例如先在编辑器把 `WITW+WITE v0.9.65.scn` **另存为 `Italy_Husky_43.scn`** 或 **`Italy_Campaign_43_45.scn`**，记住不要覆盖母版！）。
+2. 把 `意大利mod\output\Italy_Husky_43\`（或 `Italy_Campaign_43_45\`）里的 **20 个 `.csv` 文件** 全部复制到 `Dat\CSV\<剧本名>\`（目录名须与你当前加载的 `.scn` 剧本名一致！如果刚才还没另存，可先在加载新剧本后点一次 `Export to CSV` 让编辑器建出准确同名目录，再覆盖进去）。
 3. 切到编辑器紫色 **`CSV`** 标签页，勾选全部分类（重点含 `Units`, `Locations`, `AirGroups`, `GameEvents`），点击 **`Import from CSV`**。
 
 ---
@@ -71,8 +71,8 @@ python -m wite2_tools.cli gen-orphans --nat-codes 1 3
    - 确认关闭 **Campaign** 模式（避免柏林陷落硬编码）。
    - 设置 **`Turns`**：西西里小剧本填 `8`；意大利战役大剧本填 `96`。
    - 设置 **`Map NW Limit`** 与 **`Map SE Limit`**：
-     - 西西里小剧本：`NW = 57, 275`，`SE = 166, 314`
-     - 意大利战役大剧本：`NW = 57, 208`，`SE = 176, 318`
+     - 西西里小剧本：`NW = 57, 270`，`SE = 166, 314`
+     - 意大利战役大剧本：`NW = 57, 202`，`SE = 176, 318`
    - 调整船运池（UI 的 Ladoga 栏）与城市 VP 胜利条件。
 2. **`Locations` 边角清零（大剧本推荐）**：检查非意大利的南法/巴尔干城市 VP 设为 `0`。
 3. **运行编辑器内置清理与校验工具（Utility 必跑四步）**：

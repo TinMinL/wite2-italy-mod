@@ -3,7 +3,7 @@
   "name": "Operation Husky 1943 (Sicily Standalone)",
   "display_name_zh": "1943 哈士奇行动：西西里登陆（极速减负小剧本）",
   "description": "仅覆盖突尼斯东北、马耳他、西西里岛与卡拉布里亚南端的 8 回合独立登陆小剧本，直接继承上游 v0.9.60 已验证的 shape2 滩头与 7 支空降预案。",
-  "upstream_base": "WITW+WITE v0.9.65 (compatible with v0.9.60)",
+  "upstream_base": "WITW+WITE v0.9.65",
   "target_game_version": "WiTE2 v1.05.02",
   "campaign_mode": false,
   "start_date": "1943-07-03",
@@ -33,7 +33,9 @@
       "arrive_y": 290,
       "delay": 1,
       "frozen": 0,
-      "morale": 85
+      "morale": 85,
+      "higher_hq": "77",
+      "theater_box": 0
     }
   ],
   "freeze_unit_ids": {

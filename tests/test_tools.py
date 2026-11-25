@@ -124,11 +124,13 @@ class TestOldEditorCsvCropAndValidate(unittest.TestCase):
             self.assertEqual(val["errors"], [], msg=f"Unexpected validation errors: {val['errors']}")
 
 
-class TestNewEditorRealV0960Pipeline(unittest.TestCase):
+class TestNewEditorRealUpstreamPipeline(unittest.TestCase):
     def setUp(self) -> None:
-        self.real_dir = GAME_ROOT / "Dat" / "CSV" / "WITW+WITE v0.9.60"
+        v65 = GAME_ROOT / "Dat" / "CSV" / "WITW+WITE v0.9.65"
+        v60 = GAME_ROOT / "Dat" / "CSV" / "WITW+WITE v0.9.60"
+        self.real_dir = v65 if (v65 / "Units.csv").exists() else v60
         if not (self.real_dir / "Units.csv").exists():
-            self.skipTest("未检测到导出的 Dat/CSV/WITW+WITE v0.9.60 目录")
+            self.skipTest("未检测到导出的 Dat/CSV/WITW+WITE v0.9.65 或 v0.9.60 目录")
 
     def test_real_husky_crop_validate_and_fidelity(self) -> None:
         cfg = json.loads((MOD_ROOT / "config" / "italy_husky_43.json").read_text(encoding="utf-8"))
@@ -210,11 +212,16 @@ class TestNewEditorRealV0960Pipeline(unittest.TestCase):
             val = validate_scenario_csvs(out_dir, "", cfg)
             self.assertEqual(val["errors"], [], msg=f"Campaign validation errors: {val['errors']}")
 
-            # 验证排除区（南法、巴尔干）内存活地图单位数为 0，且第1伞兵师(2044)与XI伞兵军(2014)已豁免保留
+            # 验证排除区（南法、巴尔干）内存活地图单位数为 0，且全部 36 支德军历史增援与支援营命中并清 TB 锁
+            self.assertEqual(len(report["force_keep_applied"]), len(cfg["force_keep_units"]))
             _, u_rows, _ = read_csv_rows(out_dir / "Units.csv")
+            u_by_id = {r["ID"]: r for r in u_rows}
             alive_ids = {r["ID"] for r in u_rows if is_unit_slot_alive(r)}
-            self.assertIn("2044", alive_ids)
-            self.assertIn("2014", alive_ids)
+            for check_id, exp_delay in (("2044", "1"), ("2014", "1"), ("2907", "4"), ("3243", "6"), ("3244", "20"), ("3302", "27"), ("3084", "31"), ("1070", "31")):
+                self.assertIn(check_id, alive_ids)
+                self.assertEqual(u_by_id[check_id]["Delay"], exp_delay)
+                self.assertEqual(u_by_id[check_id]["TheaterBox"], "0")
+                self.assertEqual(u_by_id[check_id]["HigherHQ"], "3240")
             for r in u_rows:
                 if is_unit_slot_alive(r) and int(r["X"]) > 0 and int(r["Y"]) > 0:
                     self.assertFalse(in_excluded_boxes(int(r["X"]), int(r["Y"]), cfg["exclude_boxes"]))

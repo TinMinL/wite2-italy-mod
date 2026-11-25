@@ -18,22 +18,22 @@
 
 ## 核心特性
 
-1. **大剧本 + 小剧本一体化架构（已基于真实 `v0.9.60` CSV + 官方 WITW 史料校准跑通零报错校验）**
-   - **大剧本 (`italy_campaign_43_45`)**：1943.7–1945.5 意大利全境战役（`NW=[57,208], SE=[176,318]` 结合南法/巴尔干排除区，削减 `90.25%` 面积；真实裁剪保留 `732` 单位 / `173` 机场 / `241` 航空队，豁免保留第 1 伞兵师与 XI 伞兵军）。
-   - **小剧本 1 (`italy_husky_43`)**：1943 哈士奇行动·西西里登陆（`NW=[57,270], SE=[166,314]` 结合撒丁排除区，削减 `96.43%` 面积；真实裁剪保留 `433` 单位 / `60` 机场 / `159` 航空队，完整保留第 29 装掷师、第 1 伞兵师、6 支两栖 TF 与 7 支空降预案，冻结 11 支萨莱诺师并按官方 WITW 校准德意士气）。
+1. **大剧本 + 小剧本一体化架构（已基于真实 `v0.9.65` CSV + 官方 WITW 史料校准跑通零报错校验）**
+   - **大剧本 (`italy_campaign_43_45`)**：1943.7–1945.5 意大利全境战役（`NW=[57,202], SE=[176,318]` 结合南法/巴尔干排除区，削减 `89.71%` 面积；真实裁剪保留 `810` 单位 / `205` 机场 / `337` 航空队，依据官方 WITW `Battleground Italy 43-45` 恢复全部 **36 支**法国/奥地利/预备队德军师、第 10/14 集团军及 508 虎式/653 象式等精锐支援营）。
+   - **小剧本 1 (`italy_husky_43`)**：1943 哈士奇行动·西西里登陆（`NW=[57,270], SE=[166,314]` 结合撒丁排除区，削减 `96.43%` 面积；真实裁剪保留 `435` 单位 / `61` 机场 / `185` 航空队，完整保留第 29 装掷师、第 1 伞兵师、6 支两栖 TF 与 7 支空降预案，冻结 11 支萨莱诺师并按官方 WITW 校准德意士气）。
    - **小剧本 2 (`italy_avalanche_rome`)**：1943–1944 萨莱诺至罗马/古斯塔夫防线蓝图（`2,500` 格，削减 `98.14%` 面积）。
-2. **安全可复现的 Python CSV 裁剪与校验工具链（兼容 New Editor & Old Editor + 上游 `v0.9.65` 就绪）**
+2. **安全可复现的 Python CSV 裁剪与校验工具链（兼容 New Editor & Old Editor + 上游 `v0.9.65`）**
    - `tools/hex_geometry.py`：严格实现 WitE2 原生 **`shape2`（按行错位）** 六角格邻接/距离、`SE-1` 半开区间与 `exclude_boxes` 排除区判定。
    - `tools/crop_csv.py`：
      - 支持 **v1.05.02 New Editor 20 文件子目录格式**与旧版前缀格式；
-     - 支持 `force_keep_units` 历史豁免、 `freeze_unit_ids` 政策冻结、`morale_overrides` 士气校准；
+     - 支持 `force_keep_units` 历史豁免（含 `higher_hq`/`theater_box` 覆写）、`freeze_unit_ids` 政策冻结、`morale_overrides` 士气校准；
      - 通过 `Locations.AbUnit` 精准保留框内机场，并自动将框外在图/延迟祖先 HQ 迁入配置锚点；
      - 不删行保槽位、原样保留 `ISO-8859-1` (`Pilots.csv`) 编码、按列表流式裁剪 `GameEvents.csv` 变长尾列。
    - `tools/compare_witw_husky.py`：直接对比官方 WITW *Operation Husky* CSV 与本项目输出，自动生成 [docs/WITW_HUSKY_COMPARISON.md](docs/WITW_HUSKY_COMPARISON.md)。
    - `tools/validate_csv.py`：7 项离线硬核校验（Schema、边界/排除区、HQ 链、堆叠上限、机场 `AbUnit` 链接、事件策略、Husky `shape2` 几何）。
    - 可与社区工具 **[mlshort/wite2_tools](https://github.com/mlshort/wite2_tools)** 联用，在导入前做 `audit-batch` / `gen-orphans` 深度数据库体检。
 3. **写给人也写给所有 AI 看的开发避坑手册**
-   - 详见 [AI_DEV_GUIDE.md](AI_DEV_GUIDE.md)：记录 20 条实测与继承避坑经验（含 `v0.9.65` 升级流程）。
+   - 详见 [AI_DEV_GUIDE.md](AI_DEV_GUIDE.md)：记录 21 条实测与继承避坑经验（含 `v0.9.65` 升级流程与大剧本德军增援清单）。
 
 ---
 
@@ -57,8 +57,8 @@
 # 1. 运行自动化回归测试（8 项全覆盖：shape2 几何 + Old/New Editor 真实 CSV 端到端裁剪校验 + 编码/变长尾列保真）
 python -m unittest discover -s tests -v
 
-# 2. 对 New Editor 导出的 WITW+WITE v0.9.60 目录执行裁剪（以西西里小剧本为例）
-python tools/crop_csv.py --input-dir "..\Dat\CSV\WITW+WITE v0.9.60" --config "config\italy_husky_43.json" --output-dir "output\Italy_Husky_43" --relocate-offmap-hqs --report "docs\HUSKY_REAL_CROP_REPORT.md"
+# 2. 对 New Editor 导出的 WITW+WITE v0.9.65 目录执行裁剪（以西西里小剧本为例）
+python tools/crop_csv.py --input-dir "..\Dat\CSV\WITW+WITE v0.9.65" --config "config\italy_husky_43.json" --output-dir "output\Italy_Husky_43" --relocate-offmap-hqs --report "docs\HUSKY_REAL_CROP_REPORT.md"
 python tools/validate_csv.py --input-dir "output\Italy_Husky_43" --config "config\italy_husky_43.json"
 ```
 
@@ -66,13 +66,11 @@ python tools/validate_csv.py --input-dir "output\Italy_Husky_43" --config "confi
 
 ## 当前验证状态（诚实边界）
 
-- **已通过实机编辑器导入与静态校验**：
-  - `Italy_Husky_43.scn` 已在 **WitE2 v1.05.02 New Editor** 完成 20 文件 CSV 批量 `Import from CSV`（`Batch import: Errors: 0, Warnings: 4`）并保存为独立剧本。
-  - `Scenario Check Utility` 核对 **0 越界、0 超堆叠**（其余报错为上游 `WITW+WITE` 盟军套苏联皮常规项）。
-  - `shape2` 六角格几何、`crop_csv.py` 与 `validate_csv.py` 已在真实 `WITW+WITE v0.9.60` CSV 上通过 8/8 自动化回归测试（`Italy_Husky_43` 与 `Italy_Campaign_43_45` 均 `errors == []`）。
-- **待实机游玩验证**：
-  - `Italy_Husky_43.scn` 的游戏内开局 T1 登陆/空降实操、过回合耗时及平衡性待实机试玩闭环；
-  - `Italy_Campaign_43_45` 已生成可导入 CSV（本地 `output/Italy_Campaign_43_45/`），待在编辑器导入保存为 `.scn`。
+- **已通过实机编辑器导入与 `v0.9.65` 静态校验**：
+  - `shape2` 六角格几何、`crop_csv.py` 与 `validate_csv.py` 已在真实 `Dat\CSV\WITW+WITE v0.9.65\` 上通过 8/8 自动化回归测试（`Italy_Husky_43` 与 `Italy_Campaign_43_45` 均 `errors == []`）。
+  - `v0.3.0-alpha` 的 `Italy_Husky_43.scn`（基于 `v0.9.60` 构建）已在 **WitE2 v1.05.02 New Editor** 完成 20 文件 CSV 批量 `Import from CSV`（`Batch import: Errors: 0, Warnings: 4`）与 `Scenario Check Utility` 零越界/零超堆叠校验。
+- **待实机操作与游玩验证**：
+  - `v0.4.0` 基于 `v0.9.65` 生成的 `output/Italy_Husky_43/` 与 `output/Italy_Campaign_43_45/` 待在编辑器导入保存为最新 `.scn` 并在游戏内跑通 T1~T2 实机测试。
 
 ---
 

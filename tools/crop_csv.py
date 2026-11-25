@@ -317,6 +317,8 @@ def _crop_new_editor(
             "delay": "Delay",
             "frozen": "Frozen",
             "morale": "Morale",
+            "higher_hq": "HigherHQ",
+            "theater_box": "TheaterBox",
         }
         applied_fields: dict[str, Any] = {}
         for cfg_key, csv_col in field_map.items():
