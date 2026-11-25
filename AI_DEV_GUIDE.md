@@ -132,6 +132,15 @@
 19. **与开源工具 `mlshort/wite2_tools` 的联合体检工作流**  
     - 本项目负责“地图裁剪 + `AbUnit` 机场联动 + `exclude_boxes` + 事件停用 + Husky `shape2` 校验”；社区工具 `mlshort/wite2_tools` 擅长“数据库深度体检”。建议在裁剪后、导入编辑器前，配合使用其 `audit-batch`（查 Ghost Squads 与重复 ID）、`gen-chains` / `gen-orphans --nat-codes 1 3`（核对德意编制升级链未断）和 `scan-excess`（检查开局超额油弹补给）。
 
+20. **基于官方 WITW 实测的历史大修与 `v0.9.65` 升级防漏点**  
+    - **事实来源**：对比本地官方 WITW `Introductory Scenario - Operation Husky_unit.csv` 与 `WITW+WITE v0.9.60` 全表（见 [docs/WITW_HUSKY_COMPARISON.md](docs/WITW_HUSKY_COMPARISON.md)）。
+    - **西西里北界至少取 `Y=270`**：第 29 装掷师（ID `631`）开局在卡拉布里亚 `(158, 274)`，设 `NW_y=275` 会差 1 格将其切掉；已通过 `NW=[57,270]` 纳入。
+    - **第 1 伞兵师豁免白名单**：第 1 伞兵师（`2044`）开局在南法 `(99, 238)`，小剧本在框外、大剧本会撞进南法排除盒，必须用 `force_keep_units` 显式豁免并设为 `Delay=1` 空运增援（西西里落卡塔尼亚 `(153,290)`，大剧本落罗马东南 `(142,257)`）。
+    - **西西里小剧本必须冻结 11 支萨莱诺/半岛盟军师**：用 `freeze_unit_ids`（12 回合）冻结 US 1st Arm/34/36、UK 6th/7th Arm/1/4/46/56、FF 2nd Tabor/4th Moroccan，使未冻结参战盟军保持在 19 支（与 WITW 官方 18 支 + `509th` 对齐）。
+    - **德意核心师士气按 WITW 校准**：`HG` `85→70`、`15th PzGr` `86→75`、`29th PzGr` `83→70`、`1st FJ` `80→85`、`4th Livorno/26th Assietta/54th Napoli/28th Aosta` 校准为 `40/40/35/35`。
+    - **延迟增援祖先 HQ 也会带进框外坐标**：豁免南法/框外单位时，其 `HigherHQ` 若为未来到达的框外司令部（如 `2836 Army Group H` 在荷兰 `(116,173)`），`crop_csv.py` 必须同时重定位 `ArriveX/ArriveY` 至锚点。
+    - **上游 `v0.9.65` 升级说明**：已将 `WITW+WITE v0.9.65.scn`（补齐威尼斯铁路司令部、41 座仓库、235 支轴心战区航空队、2,338 名轴心飞行员、北非 50 支盟军集结与 20 万卡车/2,000 飞行员池）预置到 `Dat/Scen/`；在 New Editor 导出 `v0.9.65` CSV 后，直接把 `crop_csv.py` 的 `--input-dir` 指向 `Dat/CSV/WITW+WITE v0.9.65` 即可一键生成新一代历史大修版。
+
 ---
 
 ## 4. 给后续 AI 接手的标准工作流 (Quickstart for AI Agents)

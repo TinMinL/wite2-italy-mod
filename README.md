@@ -18,30 +18,32 @@
 
 ## 核心特性
 
-1. **大剧本 + 小剧本一体化架构（已基于真实 `v0.9.60` CSV 跑通裁剪与零报错校验）**
-   - **大剧本 (`italy_campaign_43_45`)**：1943.7–1945.5 意大利全境战役（`NW=[57,208], SE=[176,318]` 结合南法/巴尔干排除区，削减 `90.25%` 面积；真实裁剪保留 `729` 单位 / `173` 机场 / `241` 航空队，停用 `9,733` 无关单位）。
-   - **小剧本 1 (`italy_husky_43`)**：1943 哈士奇行动·西西里登陆（`NW=[57,275], SE=[166,314]` 结合撒丁排除区，削减 `96.83%` 面积；真实裁剪保留 `424` 单位 / `55` 机场 / `159` 航空队，完整保留全部 6 支两栖 TF 与 7 支空降预案）。
+1. **大剧本 + 小剧本一体化架构（已基于真实 `v0.9.60` CSV + 官方 WITW 史料校准跑通零报错校验）**
+   - **大剧本 (`italy_campaign_43_45`)**：1943.7–1945.5 意大利全境战役（`NW=[57,208], SE=[176,318]` 结合南法/巴尔干排除区，削减 `90.25%` 面积；真实裁剪保留 `732` 单位 / `173` 机场 / `241` 航空队，豁免保留第 1 伞兵师与 XI 伞兵军）。
+   - **小剧本 1 (`italy_husky_43`)**：1943 哈士奇行动·西西里登陆（`NW=[57,270], SE=[166,314]` 结合撒丁排除区，削减 `96.43%` 面积；真实裁剪保留 `433` 单位 / `60` 机场 / `159` 航空队，完整保留第 29 装掷师、第 1 伞兵师、6 支两栖 TF 与 7 支空降预案，冻结 11 支萨莱诺师并按官方 WITW 校准德意士气）。
    - **小剧本 2 (`italy_avalanche_rome`)**：1943–1944 萨莱诺至罗马/古斯塔夫防线蓝图（`2,500` 格，削减 `98.14%` 面积）。
-2. **安全可复现的 Python CSV 裁剪与校验工具链（兼容 New Editor & Old Editor）**
+2. **安全可复现的 Python CSV 裁剪与校验工具链（兼容 New Editor & Old Editor + 上游 `v0.9.65` 就绪）**
    - `tools/hex_geometry.py`：严格实现 WitE2 原生 **`shape2`（按行错位）** 六角格邻接/距离、`SE-1` 半开区间与 `exclude_boxes` 排除区判定。
    - `tools/crop_csv.py`：
      - 支持 **v1.05.02 New Editor 20 文件子目录格式**与旧版前缀格式；
-     - 通过 `Locations.AbUnit` 精准保留框内机场（解决 `Units.csv` 中机场坐标为 `0,0` 的坑）；
-     - 不删行保槽位、原样保留 `ISO-8859-1` (`Pilots.csv`) 编码、按列表流式裁剪 `GameEvents.csv` 变长尾列；
-     - 自动将框外祖先高司 HQ 迁入配置锚点（`--relocate-offmap-hqs`）。
+     - 支持 `force_keep_units` 历史豁免、 `freeze_unit_ids` 政策冻结、`morale_overrides` 士气校准；
+     - 通过 `Locations.AbUnit` 精准保留框内机场，并自动将框外在图/延迟祖先 HQ 迁入配置锚点；
+     - 不删行保槽位、原样保留 `ISO-8859-1` (`Pilots.csv`) 编码、按列表流式裁剪 `GameEvents.csv` 变长尾列。
+   - `tools/compare_witw_husky.py`：直接对比官方 WITW *Operation Husky* CSV 与本项目输出，自动生成 [docs/WITW_HUSKY_COMPARISON.md](docs/WITW_HUSKY_COMPARISON.md)。
    - `tools/validate_csv.py`：7 项离线硬核校验（Schema、边界/排除区、HQ 链、堆叠上限、机场 `AbUnit` 链接、事件策略、Husky `shape2` 几何）。
    - 可与社区工具 **[mlshort/wite2_tools](https://github.com/mlshort/wite2_tools)** 联用，在导入前做 `audit-batch` / `gen-orphans` 深度数据库体检。
 3. **写给人也写给所有 AI 看的开发避坑手册**
-   - 详见 [AI_DEV_GUIDE.md](AI_DEV_GUIDE.md)：记录 19 条实测与继承避坑经验。
+   - 详见 [AI_DEV_GUIDE.md](AI_DEV_GUIDE.md)：记录 20 条实测与继承避坑经验（含 `v0.9.65` 升级流程）。
 
 ---
 
 ## 文档与目录导航
 
-- **[AI_DEV_GUIDE.md](AI_DEV_GUIDE.md)**：人类与 AI 开发者必读的架构铁律、引擎坑点（含 New Editor 20 文件与 `wite2_tools` 协作）与 Quickstart。
+- **[AI_DEV_GUIDE.md](AI_DEV_GUIDE.md)**：人类与 AI 开发者必读的架构铁律、引擎坑点与 Quickstart。
+- **[docs/WITW_HUSKY_COMPARISON.md](docs/WITW_HUSKY_COMPARISON.md)**：官方 WITW《哈士奇行动》vs 本项目实测对照表。
 - **[docs/EDITOR_WORKFLOW.md](docs/EDITOR_WORKFLOW.md)**：WitE2 New Editor（紫色 `CSV` 标签页）`Export → 裁剪 → Import → 收尾校验` 完整步骤。
 - **[docs/SCENARIO_BLUEPRINT.md](docs/SCENARIO_BLUEPRINT.md)**：三大剧本的坐标盒、排除区、真实裁剪统计与 VP/人力设计蓝图。
-- **[docs/HUSKY_REAL_CROP_REPORT.md](docs/HUSKY_REAL_CROP_REPORT.md)** & **[docs/CAMPAIGN_REAL_CROP_REPORT.md](docs/CAMPAIGN_REAL_CROP_REPORT.md)**：基于真实 `WITW+WITE v0.9.60` CSV 跑出的详细裁剪审计报告。
+- **[docs/HUSKY_REAL_CROP_REPORT.md](docs/HUSKY_REAL_CROP_REPORT.md)** & **[docs/CAMPAIGN_REAL_CROP_REPORT.md](docs/CAMPAIGN_REAL_CROP_REPORT.md)**：详细裁剪审计报告。
 - **[docs/ITALY_BASELINE_AUDIT.md](docs/ITALY_BASELINE_AUDIT.md)**：上游基线提炼审计表。
 - **[CHANGELOG.md](CHANGELOG.md)**：更新日志与验证边界说明。
 

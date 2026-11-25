@@ -3,7 +3,7 @@
   "name": "Operation Husky 1943 (Sicily Standalone)",
   "display_name_zh": "1943 哈士奇行动：西西里登陆（极速减负小剧本）",
   "description": "仅覆盖突尼斯东北、马耳他、西西里岛与卡拉布里亚南端的 8 回合独立登陆小剧本，直接继承上游 v0.9.60 已验证的 shape2 滩头与 7 支空降预案。",
-  "upstream_base": "WITW+WITE v0.9.60",
+  "upstream_base": "WITW+WITE v0.9.65 (compatible with v0.9.60)",
   "target_game_version": "WiTE2 v1.05.02",
   "campaign_mode": false,
   "start_date": "1943-07-03",
@@ -13,16 +13,60 @@
     "height": 355,
     "total_hexes": 134190
   },
-  "map_nw_limit": [57, 275],
+  "map_nw_limit": [57, 270],
   "map_se_limit": [166, 314],
-  "playable_bounds_note": "实际可玩区 X: 57..165 (109列), Y: 275..313 (39行)，合计 4,251 格，较全图削减 96.83% 面积；西延至 X=57 以完整容纳突尼斯/阿尔及利亚北非集结港与全部 6 支两栖 TF。",
+  "playable_bounds_note": "实际可玩区 X: 57..165 (109列), Y: 270..313 (44行)，合计 4,796 格，较全图削减 96.43% 面积；西延至 X=57 以容纳突尼斯/阿尔及利亚北非集结港，北延至 Y=270 以自然囊括卡拉布里亚第29装甲掷弹兵师(158,274)、第104师(159,270)与第227海岸师(156,271)。",
   "exclude_boxes": [
     {
       "name": "Southern Sardinia Edge",
-      "nw": [110, 275],
+      "nw": [110, 270],
       "se": [125, 282]
     }
   ],
+  "force_keep_units": [
+    {
+      "id": "2044",
+      "name_note": "1st Fallschirmjaeger-Division (airlifted to Catania Jul 12 1943)",
+      "x": 0,
+      "y": 0,
+      "arrive_x": 153,
+      "arrive_y": 290,
+      "delay": 1,
+      "frozen": 0,
+      "morale": 85
+    }
+  ],
+  "freeze_unit_ids": {
+    "turns": 12,
+    "note": "依据官方 WITW Operation Husky CSV，冻结11支实际属于9月萨莱诺/半岛战役的北非盟军师（US 1st Arm/34th/36th; UK 6th Arm/7th Arm/1st/4th/46th/56th; FF 2nd Tabor Goums/4th Moroccan），保留18支WITW历史参战地面师旅及2nd SAS(11808)。",
+    "unit_ids": [
+      "11551",
+      "11594",
+      "11596",
+      "11571",
+      "11572",
+      "11633",
+      "11635",
+      "11639",
+      "11645",
+      "11677",
+      "11685"
+    ]
+  },
+  "morale_overrides": {
+    "3433": 75,
+    "3434": 75,
+    "3435": 75,
+    "3075": 70,
+    "3163": 70,
+    "3164": 70,
+    "631": 70,
+    "2044": 85,
+    "3322": 40,
+    "3323": 40,
+    "3345": 35,
+    "3340": 35
+  },
   "high_command_anchor": {
     "axis": {
       "preferred_city": "Messina / Reggio Calabria",

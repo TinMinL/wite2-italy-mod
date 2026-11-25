@@ -300,6 +300,36 @@ def _crop_new_editor(
             keep_ids.add(uid)
             direct_in_box_ids.add(uid)
 
+    # 2b. 处理声明式历史豁免白名单 (force_keep_units)
+    force_keep_applied: list[dict[str, Any]] = []
+    for spec in config.get("force_keep_units", []):
+        uid = str(spec["id"])
+        row = unit_by_id.get(uid)
+        if not row or not is_unit_slot_alive(row):
+            continue
+        keep_ids.add(uid)
+        direct_in_box_ids.add(uid)
+        field_map = {
+            "x": "X",
+            "y": "Y",
+            "arrive_x": "ArriveX",
+            "arrive_y": "ArriveY",
+            "delay": "Delay",
+            "frozen": "Frozen",
+            "morale": "Morale",
+        }
+        applied_fields: dict[str, Any] = {}
+        for cfg_key, csv_col in field_map.items():
+            if cfg_key in spec and csv_col in row:
+                row[csv_col] = str(spec[cfg_key])
+                applied_fields[csv_col] = row[csv_col]
+        force_keep_applied.append({
+            "id": uid,
+            "name": row.get("Name", ""),
+            "note": spec.get("name_note", ""),
+            "applied": applied_fields,
+        })
+
     # 3. 向下传播挂载在保留单位上的支援单位 (X==0, Y==0, Delay==0, HQ!=5)
     changed = True
     while changed:
@@ -329,7 +359,11 @@ def _crop_new_editor(
                 break
             keep_ids.add(cur_id)
             x, y = _to_int(cur.get("X")), _to_int(cur.get("Y"))
-            if cur_id not in direct_in_box_ids and x > 0 and y > 0 and not is_hex_included(x, y, nw, se, exclude_boxes):
+            ax, ay = _to_int(cur.get("ArriveX")), _to_int(cur.get("ArriveY"))
+            delay = _to_int(cur.get("Delay"))
+            offmap_pos = x > 0 and y > 0 and not is_hex_included(x, y, nw, se, exclude_boxes)
+            offmap_arr = delay > 0 and ax > 0 and ay > 0 and not is_hex_included(ax, ay, nw, se, exclude_boxes)
+            if cur_id not in direct_in_box_ids and (offmap_pos or offmap_arr):
                 if cur_id not in relocate_seen:
                     relocate_seen.add(cur_id)
                     player = _to_int(cur.get("Player"))
@@ -339,23 +373,35 @@ def _crop_new_editor(
                         "id": cur_id,
                         "name": cur.get("Name", ""),
                         "player": player,
-                        "old_xy": [x, y],
+                        "old_xy": [x, y] if offmap_pos else [ax, ay],
                         "suggested_anchor_xy": anchor_xy,
                     })
                     if relocate_offmap_hqs and anchor_xy and len(anchor_xy) == 2:
-                        cur["X"] = str(anchor_xy[0])
-                        cur["Y"] = str(anchor_xy[1])
+                        if offmap_pos:
+                            cur["X"] = str(anchor_xy[0])
+                            cur["Y"] = str(anchor_xy[1])
+                        if offmap_arr:
+                            cur["ArriveX"] = str(anchor_xy[0])
+                            cur["ArriveY"] = str(anchor_xy[1])
             next_hhq = str(_to_int(cur.get("HigherHQ")))
             if next_hhq == cur_id or next_hhq == "0":
                 break
             cur_id = next_hhq
 
-    # 5. 停用框外 Units，清理保留单位上的 TheaterBox 锁
+    # 5. 停用框外 Units，清理保留单位上的 TheaterBox 锁，应用历史冻结与士气校准
     units_kept = 0
     units_cleared = 0
     tb_locks_cleared = 0
     kept_airbase_ids: set[str] = set()
     withdraw_warnings: list[dict[str, Any]] = []
+
+    freeze_cfg = config.get("freeze_unit_ids", {})
+    freeze_turns = _to_int(freeze_cfg.get("turns"), 0)
+    freeze_set = {str(x) for x in freeze_cfg.get("unit_ids", [])}
+    frozen_applied: list[dict[str, Any]] = []
+
+    morale_map = {str(k): int(v) for k, v in config.get("morale_overrides", {}).items()}
+    morale_applied: list[dict[str, Any]] = []
 
     for row in unit_rows:
         uid = row["ID"]
@@ -366,6 +412,15 @@ def _crop_new_editor(
             if clear_tb_locks and _to_int(row.get("TheaterBox")) != 0:
                 row["TheaterBox"] = "0"
                 tb_locks_cleared += 1
+            if uid in freeze_set and freeze_turns > 0:
+                old_frz = _to_int(row.get("Frozen"))
+                if old_frz < freeze_turns:
+                    row["Frozen"] = str(freeze_turns)
+                    frozen_applied.append({"id": uid, "name": row.get("Name", ""), "old": old_frz, "new": freeze_turns})
+            if uid in morale_map:
+                old_mor = _to_int(row.get("Morale"))
+                row["Morale"] = str(morale_map[uid])
+                morale_applied.append({"id": uid, "name": row.get("Name", ""), "old": old_mor, "new": morale_map[uid]})
             wt = _to_int(row.get("WithdrawTurn"))
             if wt > 0:
                 withdraw_warnings.append({
@@ -442,6 +497,9 @@ def _crop_new_editor(
         "events_disabled_samples": events_stats["disabled_samples"],
         "relocate_offmap_hqs_applied": relocate_offmap_hqs,
         "hq_relocate_required": relocate_required,
+        "force_keep_applied": force_keep_applied,
+        "frozen_by_policy": frozen_applied,
+        "morale_overrides_applied": morale_applied,
         "withdraw_warnings_count": len(withdraw_warnings),
         "withdraw_warnings_sample": withdraw_warnings[:20],
     }
@@ -618,6 +676,9 @@ def _crop_old_editor(
         "events_disabled_samples": [],
         "relocate_offmap_hqs_applied": relocate_offmap_hqs,
         "hq_relocate_required": relocate_required,
+        "force_keep_applied": [],
+        "frozen_by_policy": [],
+        "morale_overrides_applied": [],
         "withdraw_warnings_count": len(withdraw_warnings),
         "withdraw_warnings_sample": withdraw_warnings[:20],
     }
@@ -686,6 +747,30 @@ def format_report_md(report: dict[str, Any]) -> str:
             lines.append(f"- Unit `{w['id']}` ({w['name']}): {w}")
     else:
         lines.append("- 无待核对的撤离转移。")
+
+    fku = report.get("force_keep_applied", [])
+    lines.extend(["", f"## 历史豁免与部署覆写 (`force_keep_units`, 共 {len(fku)} 条)"])
+    if fku:
+        for item in fku:
+            lines.append(f"- Unit `{item['id']}` ({item['name']}): {item['applied']} — {item['note']}")
+    else:
+        lines.append("- 无。")
+
+    fbp = report.get("frozen_by_policy", [])
+    lines.extend(["", f"## 非参战部队政策冻结 (`freeze_unit_ids`, 共 {len(fbp)} 条)"])
+    if fbp:
+        for item in fbp:
+            lines.append(f"- Unit `{item['id']}` ({item['name']}): Frozen {item['old']} -> {item['new']}")
+    else:
+        lines.append("- 无。")
+
+    mor = report.get("morale_overrides_applied", [])
+    lines.extend(["", f"## 基于 WITW 史料的士气校准 (`morale_overrides`, 共 {len(mor)} 条)"])
+    if mor:
+        for item in mor:
+            lines.append(f"- Unit `{item['id']}` ({item['name']}): Morale {item['old']} -> {item['new']}")
+    else:
+        lines.append("- 无。")
     return "\n".join(lines) + "\n"
 
 

@@ -4,6 +4,27 @@
 
 ---
 
+## [v0.4.0-dev] - 2026-11-25（官方 WITW 史料大修 + 上游 `v0.9.65` 母版预置）
+
+### 重大改进
+- **预置上游最新母版 `WITW+WITE v0.9.65`**：下载并通过 SHA256 校验（`a437b391...`）解压至只读基线 `source/witw-wite-v0.9.65/`，已将 `WITW+WITE v0.9.65.scn` 与 `.txt` 部署至游戏 `Dat\Scen\` 待导出。上游 `v0.9.61–v0.9.65` 补齐了威尼斯德军铁路司令部、41 座仓库、235 支战区轴心航空队、2,338 名轴心飞行员、5,793 架备用机及 20 万卡车/2,000 飞行员池。
+- **裁剪引擎新增声明式历史校准能力 (`tools/crop_csv.py`)**：
+  - 新增 `force_keep_units`（历史参战豁免与部署覆写）、`freeze_unit_ids`（非参战师冻结）与 `morale_overrides`（士气校准）；
+  - 修复延迟增援祖先 HQ（如 `2836 Army Group H` 在 `(116,173)`）在向上闭包时未重定位 `ArriveX/ArriveY` 的缺陷。
+- **依据本地官方 WITW《哈士奇行动》CSV 完成历史大修**：
+  - `italy_husky_43.json` 北界从 `Y=275` 移至 `Y=270`，找回卡拉布里亚 **第 29 装甲掷弹兵师 (`631`)**；豁免保留 **第 1 伞兵师 (`2044`)** 于 T2 空运至卡塔尼亚 `(153,290)`；冻结 11 支 9 月萨莱诺/半岛盟军师（`Frozen=12`），使开局未冻结参战盟军保持在 19 支（对齐官方 WITW 18 支 + `509th`）；德意核心师士气对标 WITW 回调（`HG 70`, `15th PzGr 75`, `29th PzGr 70`, `1st FJ 85`, 意四师 `40/40/35/35`）。
+  - `italy_campaign_43_45.json` 同步豁免保留第 1 伞兵师 (`2044`) 与 XI 伞兵军 (`2014`) 于 T2 部署罗马东南 `(142,257)`，并同步上述士气校准。
+- **新增 WITW 对照脚本与报告**：[tools/compare_witw_husky.py](tools/compare_witw_husky.py) 与 [docs/WITW_HUSKY_COMPARISON.md](docs/WITW_HUSKY_COMPARISON.md)。
+
+### 已完成验证（自动化与真实 CSV）
+- `python -m unittest discover -s tests -v`：8/8 测试全部通过（已包含第 29 师/第 1 伞兵师/士气校准/11 师冻结/Campaign 豁免断言）。
+- 基于当前已导出 `WITW+WITE v0.9.60` CSV 重跑 `Italy_Husky_43`（433 单位 / 60 机场 / 159 航空队）与 `Italy_Campaign_43_45`（732 单位 / 173 机场 / 241 航空队）：均返回 **`errors: []`、`overstack_hexes: 0`、`husky_geometry_errors: 0`**。
+
+### 下一步待办（`v0.4.0` 实机发布）
+- 在 WitE2 New Editor 打开 `WITW+WITE v0.9.65.scn` 点一次 `Export to CSV`，随后用 `crop_csv.py` 重跑大/小剧本并回灌导出最终 `.scn`（`v0.3.0-alpha` Release 目前仍是 `v0.9.60` 底子构建的初版西西里小剧本）。
+
+---
+
 ## [v0.3.0-alpha] - 2026-11-25（首个可玩西西里小剧本发布包 `Italy_Husky_43`）
 
 ### 新增产出

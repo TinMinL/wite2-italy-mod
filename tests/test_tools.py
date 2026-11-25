@@ -151,11 +151,30 @@ class TestNewEditorRealV0960Pipeline(unittest.TestCase):
 
             # 验证 6 支两栖 TF 与 7 支空降分队全部存活且未落入排除区
             _, u_rows, _ = read_csv_rows(out_dir / "Units.csv")
+            u_by_id = {r["ID"]: r for r in u_rows}
             alive_ids = {r["ID"] for r in u_rows if is_unit_slot_alive(r)}
             for tf in cfg["husky_validation"]["landings"]:
                 self.assertIn(str(tf["tf_id"]), alive_ids)
             for ab in cfg["husky_validation"]["airborne_plans"]:
                 self.assertIn(str(ab["id"]), alive_ids)
+
+            # WITW 历史校准回归：第29装掷师(631)与第1伞兵师(2044)存活，士气已校准
+            self.assertIn("631", alive_ids)
+            self.assertEqual(u_by_id["631"]["Morale"], "70")
+            self.assertIn("2044", alive_ids)
+            self.assertEqual(u_by_id["2044"]["Delay"], "1")
+            self.assertEqual((u_by_id["2044"]["ArriveX"], u_by_id["2044"]["ArriveY"]), ("153", "290"))
+            self.assertEqual(u_by_id["2044"]["Morale"], "85")
+            for hg_id in ("3075", "3163", "3164"):
+                self.assertEqual(u_by_id[hg_id]["Morale"], "70")
+            for pzg15_id in ("3433", "3434", "3435"):
+                self.assertEqual(u_by_id[pzg15_id]["Morale"], "75")
+
+            # 非西西里11支盟军师已冻结 >=12，2nd SAS(11808) 与参战师保持未冻结
+            for frz_id in cfg["freeze_unit_ids"]["unit_ids"]:
+                self.assertGreaterEqual(int(u_by_id[str(frz_id)]["Frozen"]), 12)
+            self.assertEqual(u_by_id["11808"]["Frozen"], "0")
+            self.assertEqual(u_by_id["11583"]["Frozen"], "0")
 
             # 验证 Pilots.csv（ISO-8859-1）字节与 SHA256 原样无损
             src_sha = hashlib.sha256((self.real_dir / "Pilots.csv").read_bytes()).hexdigest()
@@ -191,8 +210,11 @@ class TestNewEditorRealV0960Pipeline(unittest.TestCase):
             val = validate_scenario_csvs(out_dir, "", cfg)
             self.assertEqual(val["errors"], [], msg=f"Campaign validation errors: {val['errors']}")
 
-            # 验证排除区（南法、巴尔干）内存活地图单位数为 0
+            # 验证排除区（南法、巴尔干）内存活地图单位数为 0，且第1伞兵师(2044)与XI伞兵军(2014)已豁免保留
             _, u_rows, _ = read_csv_rows(out_dir / "Units.csv")
+            alive_ids = {r["ID"] for r in u_rows if is_unit_slot_alive(r)}
+            self.assertIn("2044", alive_ids)
+            self.assertIn("2014", alive_ids)
             for r in u_rows:
                 if is_unit_slot_alive(r) and int(r["X"]) > 0 and int(r["Y"]) > 0:
                     self.assertFalse(in_excluded_boxes(int(r["X"]), int(r["Y"]), cfg["exclude_boxes"]))

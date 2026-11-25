@@ -3,7 +3,7 @@
   "name": "Italy Campaign 1943-1945 (Cropped Theater)",
   "display_name_zh": "1943–1945 意大利战役（纯意大利减负大剧本）",
   "description": "从 1943 年 7 月 3 日西西里登陆起至 1945 年 5 月波河谷/阿尔卑斯山终战的纯意大利战区大剧本，基于 WITW+WITE v0.9.60 通过裁剪可玩地图区域并清空东线/西欧后勤实体实现电脑减负。",
-  "upstream_base": "WITW+WITE v0.9.60",
+  "upstream_base": "WITW+WITE v0.9.65 (compatible with v0.9.60)",
   "target_game_version": "WiTE2 v1.05.02",
   "campaign_mode": false,
   "campaign_mode_note": "必须设为 false（非 Campaign 模式）！WitE2 的 Campaign 模式硬编码柏林陷落胜负判定，纯意大利地图不包含柏林，必须使用自定义城市 VP 胜负档位。",
@@ -29,6 +29,43 @@
       "se": [176, 252]
     }
   ],
+  "force_keep_units": [
+    {
+      "id": "2044",
+      "name_note": "1st Fallschirmjaeger-Division (exempt from Southern France exclude box, deploys to Italy T2 per WITW)",
+      "x": 0,
+      "y": 0,
+      "arrive_x": 142,
+      "arrive_y": 257,
+      "delay": 1,
+      "frozen": 0,
+      "morale": 85
+    },
+    {
+      "id": "2014",
+      "name_note": "XI Fallschirm Flieger Corps (exempt from Southern France exclude box, deploys to Rome SE T2)",
+      "x": 0,
+      "y": 0,
+      "arrive_x": 142,
+      "arrive_y": 257,
+      "delay": 1,
+      "frozen": 0
+    }
+  ],
+  "morale_overrides": {
+    "3433": 75,
+    "3434": 75,
+    "3435": 75,
+    "3075": 70,
+    "3163": 70,
+    "3164": 70,
+    "631": 70,
+    "2044": 85,
+    "3322": 40,
+    "3323": 40,
+    "3345": 35,
+    "3340": 35
+  },
   "high_command_anchor": {
     "axis": {
       "preferred_city": "Bologna / Verona",
