@@ -4,6 +4,23 @@
 
 ---
 
+## [v0.3.0-alpha] - 2026-11-25（首个可玩西西里小剧本发布包 `Italy_Husky_43`）
+
+### 新增产出
+- **可玩剧本文件**：产出并通过编辑器保存 [Dat/Scen/Italy_Husky_43.scn](Dat/Scen/Italy_Husky_43.scn)（约 2.14 MB）及配套选剧本英文简介 [Dat/Scen/Italy_Husky_43.txt](Dat/Scen/Italy_Husky_43.txt)。
+- **发布校验与压缩包**：生成 [SHA256SUMS.txt](SHA256SUMS.txt)，并构建可解压即用的发布压缩包 `Italy_Husky_43-v0.3.0-alpha.zip`（挂至 GitHub Release `v0.3.0-alpha`）。
+- **仓库规则与说明**：更新 `.gitignore` 显式放行 `Dat/Scen/*.scn` 与 `Dat/Scen/*.txt`，并在 `README.md` 新增下载安装指引。
+
+### 已完成实机编辑器验证
+- **WitE2 v1.05.02 New Editor 批量导入**：20 个裁剪 CSV 全量 `Import from CSV` 通过，报告 **`Errors: 0, Warnings: 4`**（4 条警告为上游 `OBs.csv` 原有空槽提示）。
+- **编辑器内置 Scenario Check Utility**：核对 **0 越界（Off-Map）、0 超堆叠（Overstack）**；其余提示均为上游 `WITW+WITE` 盟军套苏联皮必然产生的国籍/班组与机动差异常规项。
+
+### 待实机游玩验证
+- 游戏内新开 `Italy_Husky_43` 实测 T1 盟军两栖 `INVADE` 与 `F9 → Airborne` 落地、过回合速度及平衡性；
+- 大剧本 `Italy_Campaign_43_45` 编辑器回灌保存与发布。
+
+---
+
 ## [v0.2.0] - 2026-11-25（适配 New Editor 20 文件格式、真数据跑通裁剪与 `wite2_tools` 协作）
 
 ### 重大发现与修正

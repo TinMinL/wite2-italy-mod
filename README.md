@@ -7,6 +7,15 @@
 
 ---
 
+## 快速下载与安装（即下即玩）
+
+如果你只是想直接开玩目前已产出的西西里小剧本（**`Italy_Husky_43`**, Alpha 测试版）：
+1. 前往本仓库 **[Releases (`v0.3.0-alpha`)](https://github.com/TinMinL/wite2-italy-mod/releases/tag/v0.3.0-alpha)** 下载 `Italy_Husky_43-v0.3.0-alpha.zip` 并解压（也可直接从仓库 `Dat/Scen/` 下载 `Italy_Husky_43.scn` 与 `Italy_Husky_43.txt`）。
+2. 将解压后的 `Dat/Scen/Italy_Husky_43.scn` 和 `Dat/Scen/Italy_Husky_43.txt` **一起复制**到你的 **War in the East 2 安装目录下的 `Dat\Scen\` 文件夹**。
+3. 启动游戏（推荐双方先设 **Human** 测试），点 **`Pick Scenario`** 选择 **`Italy_Husky_43`** 即可直接开局。
+
+---
+
 ## 核心特性
 
 1. **大剧本 + 小剧本一体化架构（已基于真实 `v0.9.60` CSV 跑通裁剪与零报错校验）**
@@ -55,11 +64,13 @@ python tools/validate_csv.py --input-dir "output\Italy_Husky_43" --config "confi
 
 ## 当前验证状态（诚实边界）
 
-- **已通过自动化与真实数据静态验证**：
-  - `shape2` 六角格几何已对照上游 `husky-coastline-fix.json` 实机逆向邻接表逐一回归通过。
-  - `crop_csv.py` 与 `validate_csv.py` 已在本地真实导出的 `Dat\CSV\WITW+WITE v0.9.60\`（13,045 单位行 / 2,643 航空队行 / 4,431 地点行 / 452 事件行）上跑通 `Italy_Husky_43` 与 `Italy_Campaign_43_45` 全量裁剪与零报错校验（`errors == []`），且 `Pilots.csv` SHA256 与 `GameEvents.csv` 变长列结构 100% 保持。
-- **待实机操作验证**：
-  - 需在本地 WitE2 New Editor 中对 `output\Italy_Husky_43\` 和 `output\Italy_Campaign_43_45\` 执行 `Import from CSV`、设置 `Main Tab` 边界并运行 `DAMAGE OFF-MAP RAIL` 后另存 `.scn`，进游戏实机跑通 T1~T2。
+- **已通过实机编辑器导入与静态校验**：
+  - `Italy_Husky_43.scn` 已在 **WitE2 v1.05.02 New Editor** 完成 20 文件 CSV 批量 `Import from CSV`（`Batch import: Errors: 0, Warnings: 4`）并保存为独立剧本。
+  - `Scenario Check Utility` 核对 **0 越界、0 超堆叠**（其余报错为上游 `WITW+WITE` 盟军套苏联皮常规项）。
+  - `shape2` 六角格几何、`crop_csv.py` 与 `validate_csv.py` 已在真实 `WITW+WITE v0.9.60` CSV 上通过 8/8 自动化回归测试（`Italy_Husky_43` 与 `Italy_Campaign_43_45` 均 `errors == []`）。
+- **待实机游玩验证**：
+  - `Italy_Husky_43.scn` 的游戏内开局 T1 登陆/空降实操、过回合耗时及平衡性待实机试玩闭环；
+  - `Italy_Campaign_43_45` 已生成可导入 CSV（本地 `output/Italy_Campaign_43_45/`），待在编辑器导入保存为 `.scn`。
 
 ---
 
@@ -67,4 +78,4 @@ python tools/validate_csv.py --input-dir "output\Italy_Husky_43" --config "confi
 
 - 原始社区融合剧本 **WITW+WITE v0.9** 作者：**yyuegu**（[Matrix Games 原帖](https://forums.matrixgames.com/viewtopic.php?t=407304)）。
 - 上游修复版 **WITW+WITE v0.9.60** 维护者：**[Minatoaquadebu/witw-wite-scenario](https://github.com/Minatoaquadebu/witw-wite-scenario)**。
-- 本仓库仅包含原创裁剪配置、Python 工具链、测试、审计报告与开发文档，**不包含** Matrix Games / 2by3 Games 原版游戏程序、全局 `.dat` 数据库或上游 `.scn`/`.tga` 二进制文件。游戏本体及原始数据权利归各自权利方所有。
+- 本仓库包含原创裁剪配置、Python 工具链、测试、审计报告、开发文档以及经裁剪衍生的社区剧本文件 `Dat/Scen/Italy_Husky_43.scn`（不含游戏本体 EXE 或原版全局 `.dat` 数据库）。未将原社区作品或游戏数据重新授权为 MIT 等开源许可，游戏本体及原始数据权利归各自权利方所有。

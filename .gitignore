@@ -6,6 +6,10 @@ release/
 *.sav
 *.tga
 
+# 放行本项目产出的自制可玩剧本与同名简介
+!Dat/Scen/*.scn
+!Dat/Scen/*.txt
+
 # Python 缓存与测试产物
 __pycache__/
 *.py[cod]
