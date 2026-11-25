@@ -1,18 +1,19 @@
 # WitE2 纯意大利战场 Mod (`wite2-italy-mod`)
 
-基于社区大剧本 **[WITW+WITE v0.9.60](https://github.com/Minatoaquadebu/witw-wite-scenario)** 构建的 **Gary Grigsby's War in the East 2 (WitE2 v1.05.02)** 纯意大利战区 Mod 工程、New Editor 20 文件 CSV 逻辑裁剪与校验工具链、大/小剧本蓝图及人类/AI 通用开发避坑指南。
+基于社区大剧本 **[WITW+WITE v0.9.65](https://github.com/Minatoaquadebu/witw-wite-scenario)** 构建的 **Gary Grigsby's War in the East 2 (WitE2 v1.05.02)** 纯意大利战区 Mod 工程、New Editor 20 文件 CSV 逻辑裁剪与校验工具链、大/小剧本蓝图及人类/AI 通用开发避坑指南。
 
 > **为什么需要这个项目？**  
-> `WITW+WITE` 把东线、西欧与地中海塞在同一张全欧地图（`378×355 = 134,190` 格）里，单位极多、回合演算耗时。本项目通过 WitE2 原生 `Map NW/SE Limit` 边界裁剪 + 矩形排除区 (`exclude_boxes`) + New Editor CSV 实体/机场/事件/经济裁剪，实现 **90.25%～96.83% 面积减负**与 **93%～96% 单位裁剪**，打造专注于**意大利战场**的大剧本（1943–1945 意大利战役）与小剧本（西西里哈士奇登陆、萨莱诺至罗马）。
+> `WITW+WITE` 把东线、西欧与地中海塞在同一张全欧地图（`378×355 = 134,190` 格）里，单位极多、回合演算耗时。本项目通过 WitE2 原生 `Map NW/SE Limit` 边界裁剪 + 矩形排除区 (`exclude_boxes`) + New Editor CSV 实体/机场/事件/经济裁剪，实现 **89.71%～96.43% 面积减负**与 **90%～96% 单位裁剪**，打造专注于**意大利战场**的大剧本（1943–1945 意大利战役）与小剧本（西西里哈士奇登陆、萨莱诺至罗马）。
 
 ---
 
 ## 快速下载与安装（即下即玩）
 
-如果你只是想直接开玩目前已产出的西西里小剧本（**`Italy_Husky_43`**, Alpha 测试版）：
-1. 前往本仓库 **[Releases (`v0.3.0-alpha`)](https://github.com/TinMinL/wite2-italy-mod/releases/tag/v0.3.0-alpha)** 下载 `Italy_Husky_43-v0.3.0-alpha.zip` 并解压（也可直接从仓库 `Dat/Scen/` 下载 `Italy_Husky_43.scn` 与 `Italy_Husky_43.txt`）。
-2. 将解压后的 `Dat/Scen/Italy_Husky_43.scn` 和 `Dat/Scen/Italy_Husky_43.txt` **一起复制**到你的 **War in the East 2 安装目录下的 `Dat\Scen\` 文件夹**。
-3. 启动游戏（推荐双方先设 **Human** 测试），点 **`Pick Scenario`** 选择 **`Italy_Husky_43`** 即可直接开局。
+如果你想直接下载目前已发布的双剧本可玩包（**`v0.4.0`**：含 **西西里 8 回合小剧本 `Italy_Husky_43`** 与 **1943–1945 意大利全战役 96 回合大剧本 `Italy_Campaign_43_45`**，均基于 `WITW+WITE v0.9.65` + 官方 WITW 史料校准）：
+1. 前往本仓库 **[Releases (`v0.4.0`)](https://github.com/TinMinL/wite2-italy-mod/releases/tag/v0.4.0)** 下载 `wite2-italy-mod-v0.4.0.zip` 并解压（也可直接从仓库 `Dat/Scen/` 与 `Dat/Scen_ZH/` 获取对应 `.scn` 与 `.txt`）。
+2. 将解压后的 `Dat/Scen/*.scn` 与默认英文纯 ASCII 简介 `Dat/Scen/*.txt` **一起复制**到你的 **War in the East 2 安装目录下的 `Dat\Scen\` 文件夹**。
+3. **中文玩家可选步骤**：若你的游戏已安装中文字库汉化包（如 `WITE2_CN_10502`），可再将 `Dat/Scen_ZH/*.txt`（UTF-8 with BOM 编码）覆盖复制到游戏 `Dat\Scen\`，即可在选剧本界面显示中文背景与 T1 操作提示。
+4. 启动游戏（推荐双方先设 **Human** 测试），点 **`Pick Scenario`** 选择 **`Italy_Husky_43`** 或 **`Italy_Campaign_43_45`** 即可直接开局。
 
 ---
 
@@ -68,14 +69,14 @@ python tools/validate_csv.py --input-dir "output\Italy_Husky_43" --config "confi
 
 - **已通过实机编辑器导入与 `v0.9.65` 静态校验**：
   - `shape2` 六角格几何、`crop_csv.py` 与 `validate_csv.py` 已在真实 `Dat\CSV\WITW+WITE v0.9.65\` 上通过 8/8 自动化回归测试（`Italy_Husky_43` 与 `Italy_Campaign_43_45` 均 `errors == []`）。
-  - `v0.3.0-alpha` 的 `Italy_Husky_43.scn`（基于 `v0.9.60` 构建）已在 **WitE2 v1.05.02 New Editor** 完成 20 文件 CSV 批量 `Import from CSV`（`Batch import: Errors: 0, Warnings: 4`）与 `Scenario Check Utility` 零越界/零超堆叠校验。
-- **待实机操作与游玩验证**：
-  - `v0.4.0` 基于 `v0.9.65` 生成的 `output/Italy_Husky_43/` 与 `output/Italy_Campaign_43_45/` 待在编辑器导入保存为最新 `.scn` 并在游戏内跑通 T1~T2 实机测试。
+  - `v0.4.0` 的两份可玩剧本 [Dat/Scen/Italy_Husky_43.scn](Dat/Scen/Italy_Husky_43.scn)（`2.20 MB`）与 [Dat/Scen/Italy_Campaign_43_45.scn](Dat/Scen/Italy_Campaign_43_45.scn)（`2.21 MB`）均已在 **WitE2 v1.05.02 New Editor** 完成 20 文件 CSV 批量 `Import from CSV`（均报 **`Batch import: Errors: 0, Warnings: 4`**，4 条为上游 `OBs.csv` 原有空槽提示）、Main Tab 边界/胜利条件设置与铁路/港口初始化并保存；且已补充英文纯 ASCII (`Dat/Scen/*.txt`) 与中文 UTF-8 BOM (`Dat/Scen_ZH/*.txt`) 双语简介。
+- **待实机游玩验证**：
+  - `v0.4.0` 的两份 `.scn` 待进入正式游戏实测 T1~T2 两栖 `INVADE`、空降落地、大剧本德军增援按回合到达与过回合耗时表现。
 
 ---
 
 ## 来源、署名与版权声明
 
 - 原始社区融合剧本 **WITW+WITE v0.9** 作者：**yyuegu**（[Matrix Games 原帖](https://forums.matrixgames.com/viewtopic.php?t=407304)）。
-- 上游修复版 **WITW+WITE v0.9.60** 维护者：**[Minatoaquadebu/witw-wite-scenario](https://github.com/Minatoaquadebu/witw-wite-scenario)**。
-- 本仓库包含原创裁剪配置、Python 工具链、测试、审计报告、开发文档以及经裁剪衍生的社区剧本文件 `Dat/Scen/Italy_Husky_43.scn`（不含游戏本体 EXE 或原版全局 `.dat` 数据库）。未将原社区作品或游戏数据重新授权为 MIT 等开源许可，游戏本体及原始数据权利归各自权利方所有。
+- 上游修复版 **WITW+WITE v0.9.60–v0.9.65** 维护者：**[Minatoaquadebu/witw-wite-scenario](https://github.com/Minatoaquadebu/witw-wite-scenario)**。
+- 本仓库包含原创裁剪配置、Python 工具链、测试、审计报告、开发文档以及经裁剪衍生的社区剧本文件 `Dat/Scen/Italy_Husky_43.scn` 与 `Dat/Scen/Italy_Campaign_43_45.scn`（不含游戏本体 EXE 或原版全局 `.dat` 数据库）。未将原社区作品或游戏数据重新授权为 MIT 等开源许可，游戏本体及原始数据权利归各自权利方所有。

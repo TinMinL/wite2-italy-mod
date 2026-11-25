@@ -1,25 +1,31 @@
 Italy_Husky_43 (Operation Husky - July 1943)
 
 July 3, 1943, 8 turns. Standalone Sicily amphibious & airborne
-scenario cropped from WITW+WITE v0.9.60 for WiTE2 v1.05.02.
+scenario cropped from WITW+WITE v0.9.65 for WiTE2 v1.05.02,
+historically calibrated against official WITW Operation Husky.
 
-Playable map area is cropped to NW (57,275) - SE (166,314),
-reducing the full European grid by 96.83% to cover North African
-staging ports (Tunis/Bizerte/Algeria), Malta, Sicily, and southern
-Calabria (Reggio). Southern Sardinia edge is cleared.
+Map & Performance Crop:
+- Playable area: NW (57,270) - SE (166,314), 4,796 hexes (-96.43%)
+  covering North African staging ports (Algeria/Tunis/Bizerte),
+  Malta, Sicily, and southern Calabria (Reggio); Sardinia cleared.
+- Retained forces: 435 units (61 airbases), 185 air groups, and
+  129 locations (25 ports).
+- Stripped/disabled off-map: 10,051 units, 1,994 air groups, and
+  3,925 out-of-bounds city economies for fast turn resolution.
 
-All 10,038 out-of-theater units, 2,000 air groups, and 3,934
-out-of-bounds city economies are disabled/stripped for fast turn
-processing. Retained on-theater forces: 424 units (including 55
-airbases), 159 air groups, and 119 locations (24 ports).
-The Sep 8, 1943 Italy Surrenders and Berlin events are disabled.
+Historical Calibration (WITW Operation Husky):
+- 29th PzGr Division staged in southern Calabria; airlifted 1st
+  Fallschirmjaeger-Division restored to arrive at Catania (Delay 1).
+- Axis/Italian morale calibrated to WITW; 11 non-Husky Salerno and
+  peninsula Allied divisions frozen for 12 turns.
+- Sep 8, 1943 Italy Surrenders and Berlin Captured events disabled.
 
 T1 Allied Ops Order:
 1. Select each Amphibious HQ (TF 81/85/86, TF 545 A/B/C) and issue
    INVADE orders first.
-2. Press F9 -> Airborne to launch the 7 Tunisia airborne/glider
-   detachments onto adjacent drop hexes before ending the phase.
+2. Press F9 -> Airborne to drop the 7 Tunisia airborne/glider
+   detachments onto adjacent landing zones before ending the phase.
 
 Both sides Human recommended for initial testing.
-Original WITW+WITE by yyuegu; v0.9.60 continuation by Minatoaquadebu.
-Italy-only cropped scenario built with wite2-italy-mod.
+Original WITW+WITE by yyuegu; v0.9.65 continuation by Minatoaquadebu.
+Italy theater mod built with wite2-italy-mod (TinMinL).

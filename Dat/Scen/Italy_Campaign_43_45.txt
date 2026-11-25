@@ -1,0 +1,33 @@
+Italy_Campaign_43_45 (Italian Campaign 1943-1945)
+
+July 3, 1943, 96 turns (to May 1945). Full Italian Theater campaign
+cropped from WITW+WITE v0.9.65 for WiTE2 v1.05.02, historically
+calibrated against official WITW Battleground Italy 43-45.
+
+Map & Performance Crop:
+- Playable area: NW (57,202) - SE (176,318), 13,804 hexes (-89.71%)
+  covering North Africa, Malta, Sicily, Sardinia/Corsica, the entire
+  Italian peninsula, Po Valley, and Alpine passes; Southern France/
+  Spain and Balkans edges cleared.
+- Retained forces: 810 units (205 airbases), 337 air groups, and
+  435 locations (60 ports).
+- Stripped/disabled off-map: 9,676 units, 1,842 air groups, and
+  3,628 out-of-bounds city economies for fast turn resolution.
+
+Historical Calibration (WITW Battleground Italy 43-45):
+- Preserves Sep 8, 1943 Italy Surrenders and Italy events; disables
+  Berlin Captured and Eastern/Nordic Theater events.
+- Restores 36 WITW-verified German reinforcements & elite support
+  battalions from France/Austria/Theater Boxes into Army Group C:
+  5 HQs (incl. 10th/14th Army & LXXVI Pz Corps), 21 divisions/brigades
+  (incl. 1st/2nd/4th FJ & 26th Pz), and 10 Tiger/Ferdinand/Nashorn/
+  StuG support battalions.
+- Early Sicily Axis/Italian morale calibrated to WITW historical values.
+
+T1 Allied Ops Order:
+1. Issue INVADE orders for Husky Amphibious HQs and F9 -> Airborne
+   drops first, then prepare mainland landings around Sep 1943.
+
+Both sides Human recommended for initial testing.
+Original WITW+WITE by yyuegu; v0.9.65 continuation by Minatoaquadebu.
+Italy theater mod built with wite2-italy-mod (TinMinL).

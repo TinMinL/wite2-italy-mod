@@ -13,12 +13,19 @@
 - **西西里小剧本历史校准 (`italy_husky_43.json`)**：北界移至 `Y=270` 找回第 29 装掷师 (`631`)，豁免第 1 伞兵师 (`2044` 挂载 `77 XIV Pz Corps`) 于 T2 空运卡塔尼亚，冻结 11 支萨莱诺盟军师（`Frozen=12`），德意核心师士气按官方 WITW `Operation Husky` 回调。
 - **新增 WITW 对照脚本与报告**：[tools/compare_witw_husky.py](tools/compare_witw_husky.py) 与 [docs/WITW_HUSKY_COMPARISON.md](docs/WITW_HUSKY_COMPARISON.md)。
 
-### 已完成验证（自动化与 `v0.9.65` 真实 CSV）
-- `python -m unittest discover -s tests -v`：8/8 测试全部通过（直接跑在 `Dat/CSV/WITW+WITE v0.9.65/` 上，含全部 36 支德军历史增援断言）。
-- `validate_csv.py` 校验 `Italy_Husky_43`（435 单位 / 61 机场 / 185 航空队）与 `Italy_Campaign_43_45`（810 单位 / 205 机场 / 337 航空队）：均返回 **`errors: []`、`overstack_hexes: 0`、`husky_geometry_errors: 0`**。
+### 新增产出与实机编辑器验证（`v0.4.0` 双剧本发版）
+- **双可玩剧本文件已导入保存**：
+  - [Dat/Scen/Italy_Husky_43.scn](Dat/Scen/Italy_Husky_43.scn)（`2,201,048` 字节，8 回合西西里小剧本）；
+  - [Dat/Scen/Italy_Campaign_43_45.scn](Dat/Scen/Italy_Campaign_43_45.scn)（`2,205,863` 字节，96 回合意大利全战役大剧本）。
+  - 两份剧本均已在 **WitE2 v1.05.02 New Editor** 完成 20 文件 CSV 批量 `Import from CSV`（均报告 **`Batch import: Errors: 0, Warnings: 4`**，4 条为上游 `OBs.csv` 原有空槽提示）、Main Tab 边界与非 Campaign 胜利条件设定，以及 New Editor 铁路/港口初始化后保存。
+- **中英双语剧本简介**：
+  - 默认纯 ASCII 英文简介：[Dat/Scen/Italy_Husky_43.txt](Dat/Scen/Italy_Husky_43.txt) 与 [Dat/Scen/Italy_Campaign_43_45.txt](Dat/Scen/Italy_Campaign_43_45.txt)（适配未装汉化的原版游戏）；
+  - 中文 UTF-8 BOM 简介：[Dat/Scen_ZH/Italy_Husky_43.txt](Dat/Scen_ZH/Italy_Husky_43.txt) 与 [Dat/Scen_ZH/Italy_Campaign_43_45.txt](Dat/Scen_ZH/Italy_Campaign_43_45.txt)（适配 `WITE2_CN_10502` 等中文汉化环境）。
+- **自动化验证**：`python -m unittest discover -s tests -v` 8/8 测试全部通过（直接跑在 `Dat/CSV/WITW+WITE v0.9.65/` 上，含全部 36 支德军历史增援断言）；`validate_csv.py` 对 `Italy_Husky_43`（435 单位 / 61 机场 / 185 航空队）与 `Italy_Campaign_43_45`（810 单位 / 205 机场 / 337 航空队）均返回 **`errors: []`、`overstack_hexes: 0`、`husky_geometry_errors: 0`**。
+- **校验与发布包**：已更新 [SHA256SUMS.txt](SHA256SUMS.txt) 覆盖上述 6 份交付文件，打包 `wite2-italy-mod-v0.4.0.zip` 并发布至 GitHub Release `v0.4.0`。
 
-### 下一步（回灌编辑器生成 `v0.4.0` `.scn`）
-- 在 WitE2 New Editor 将 `output/Italy_Husky_43/` 与 `output/Italy_Campaign_43_45/` 导入并按 `docs/EDITOR_WORKFLOW.md` 保存为 `.scn`（`v0.3.0-alpha` Release 仍为初版 `v0.9.60` 西西里小剧本）。
+### 待实机游玩验证
+- 进入正式游戏测试 T1~T2 两栖 `INVADE`、空降落地、大剧本德军增援按期到达与回合演算速度。
 
 ---
 
