@@ -4,26 +4,30 @@
 
 ---
 
+## [v0.2.0] - 2026-11-25（适配 New Editor 20 文件格式、真数据跑通裁剪与 `wite2_tools` 协作）
+
+### 重大发现与修正
+- **适配 WitE2 v1.05.02 New Editor 导出格式**：实机导出 `Dat/CSV/WITW+WITE v0.9.60/` 后确认其为 20 个 PascalCase 文件子目录（含变长 `<cnd>/<actSet>` 尾列的 `GameEvents.csv` 及含 `ISO-8859-1` 字符的 `Pilots.csv`），已升级 `crop_csv.py` 与 `validate_csv.py` 全面兼容双格式并原编码无损写回。
+- **修复 `HQ=5` 机场零坐标问题**：`Units.csv` 中所有机场 `X=0, Y=0`，改为先扫描 `Locations.csv` 的 `AbUnit` 反查机场真实地图坐标，成功保住西西里 `55` 座机场（`159` 航空队）与大剧本 `173` 座机场（`241` 航空队）。
+- **修正北非集结港西界并引入 `exclude_boxes`**：实测盟军 `AFHQ (86,295)`、第 1/45 师与 TF81/TF85/TF86 分布在 `X=59..150`，将大剧本与西西里剧本 `NW_x` 西延至 `57`，同时用 `exclude_boxes` 精准剔除南法/西班牙、巴尔干与撒丁岛南缘无关单位。
+- **支持 `GameEvents.csv` 自动停用无关事件**：按列表流式读写，只改 `evActive` 列，自动停用柏林陷落（`id=78`）、东线/北欧事件及西西里小剧本中的 `Italy Surrenders (id=24)`。
+
+### 新增产出与文档
+- 新增真实裁剪审计报告：[docs/HUSKY_REAL_CROP_REPORT.md](docs/HUSKY_REAL_CROP_REPORT.md) 与 [docs/CAMPAIGN_REAL_CROP_REPORT.md](docs/CAMPAIGN_REAL_CROP_REPORT.md)（对应待导入成品位于本地 `output/Italy_Husky_43/` 与 `output/Italy_Campaign_43_45/`，不推大文件上 Git）。
+- 在 [AI_DEV_GUIDE.md](AI_DEV_GUIDE.md) 补充第 15~19 条实测避坑经验及与开源工具 `mlshort/wite2_tools` 的联合体检工作流；更新 [docs/EDITOR_WORKFLOW.md](docs/EDITOR_WORKFLOW.md) 为 New Editor 紫色 `CSV` 标签页精确操作流程。
+
+### 已完成验证（自动化与真实 `v0.9.60` 数据）
+- 运行 `python -m unittest discover -s tests -v`：**8/8 测试全部通过**（含真实 `Dat/CSV/WITW+WITE v0.9.60/` 端到端裁剪与校验、`Pilots.csv` SHA256 原字节一致、`GameEvents.csv` 变长每行列数不变、排除区存活单位为 0）。
+- 运行 `validate_csv.py` 校验 `Italy_Husky_43`（424 单位 / 55 机场 / 159 航空队）与 `Italy_Campaign_43_45`（729 单位 / 173 机场 / 241 航空队）：均返回 **`errors: []`、`overstack_hexes: 0`、`husky_geometry_errors: 0`**。
+
+### 待实机验证（下一里程碑 `v0.3.0` 目标）
+- 将 `output/Italy_Husky_43/` 与 `output/Italy_Campaign_43_45/` 在 WitE2 New Editor 中执行 `Import from CSV`、`Main Tab` 边界设置与 `DAMAGE OFF-MAP RAIL`，保存为 `.scn` 并在游戏中实测 T1~T2 登陆、空降与回合演算速度。
+
+---
+
 ## [v0.1.0] - 2026-11-25（初始化工程、裁剪工具链与 AI 避坑指南）
 
 ### 新增内容
-- **工程基线**：在独立 `意大利mod/` 目录完成初始化，本地解压 `WITW-WITE-v0.9.60.zip` 至只读 `source/` 目录（已通过 `.gitignore` 排除上游二进制与游戏本体文件，避免污染游戏目录及仓库）。
-- **三大纯意大利剧本配置 (`config/`)**：
-  - `italy_campaign_43_45.json`：1943–1945 意大利战役大剧本（`NW=[104,208]`, `SE=[176,318]`，有效 `7,920` 格，削减 `94.10%`，`96` 回合，非 Campaign 模式）。
-  - `italy_husky_43.json`：1943 哈士奇西西里登陆小剧本（`NW=[118,275]`, `SE=[166,314]`，有效 `1,872` 格，削减 `98.60%`，`8` 回合，含 6 登陆+7 空降校验规则）。
-  - `italy_avalanche_rome.json`：1943–1944 萨莱诺至罗马中小型剧本蓝图（`NW=[122,246]`, `SE=[172,296]`，有效 `2,500` 格，削减 `98.14%`，`40` 回合）。
-- **Python 裁剪与校验工具链 (`tools/`)**：
-  - `analyze_upstream_italy.py`：从上游 `data/*.json` 自动提取纯意大利基线至 `data/italy_extracted_baseline.json` 与 `docs/ITALY_BASELINE_AUDIT.md`。
-  - `hex_geometry.py`：实现 WitE2 原生 `shape2`（按行错位）邻接/距离函数及半开区间 `[NW, SE)` 边界判定，并保留 `shape3` 反例回归对照。
-  - `crop_csv.py`：实现不删行保槽位的 CSV 裁剪（置空框外单位为 `delay=998`、清零框外城市工业与库存、清理 `theaterBox`/`thBoxLock`、支持 `--relocate-offmap-hqs` 自动迁入高司锚点、输出 JSON + Markdown 审计报告）。
-  - `validate_csv.py`：实现 6 项离线检查（Schema、边界、HQ 链、堆叠、机场链接、Husky `shape2` 几何）。
-- **文档体系（人类 + AI 通用）**：
-  - `AI_DEV_GUIDE.md`：包含项目架构铁律、WitE2 引擎核心机制、从上游继承的 14 条血泪避坑清单及 AI Quickstart。
-  - `docs/SCENARIO_BLUEPRINT.md`、`docs/EDITOR_WORKFLOW.md`、`README.md`。
-
-### 已完成验证（静态与自动化）
-- 运行 `python tools/analyze_upstream_italy.py`：成功生成 `data/italy_extracted_baseline.json`（含 16 座框内目标城市、6 支两栖编组与 7 支空降分队信息）与 `docs/ITALY_BASELINE_AUDIT.md`。
-- 运行 `python -m unittest discover -s tests -v`：**6/6 测试全部通过**（`shape2` 与上游 `husky-coastline-fix.json` 逐格匹配；官方 `Introductory Scenario 1 - Velikie Luki` CSV 端到端裁剪保留全部 `16,384` 单位槽位与表头、正确迁移框外 HQ 并通过 `validate_csv.py` 零报错校验）。
-
-### 待实机验证（下一里程碑 `v0.2.0` 目标）
-- 在本地 `WarInTheEast2.exe` 编辑器中打开 `WITW+WITE v0.9.60.scn` 执行 `Export CSV` → 运行 `crop_csv.py` → `Import CSV` → 完成 `Main Tab` 与 `DAMAGE OFF-MAP RAIL` 后另存首个可玩 `.scn`（优先 `Italy_Husky_43.scn`），并实机推进 T1~T2 验证登陆、空降与回合演算速度。
+- 初始化 `意大利mod/` 独立工程与只读上游基线 `source/witw-wite-v0.9.60/`（已 `.gitignore`）。
+- 编写三大纯意大利剧本配置 `config/*.json`、上游数据提炼脚本 `tools/analyze_upstream_italy.py`、`shape2` 六角格几何模块 `tools/hex_geometry.py`、旧版 CSV 裁剪与校验工具及 `AI_DEV_GUIDE.md`。
+- 运行 `python -m unittest discover -s tests -v`：初版 6/6 测试全部通过，并创建 GitHub 仓库 `TinMinL/wite2-italy-mod`。

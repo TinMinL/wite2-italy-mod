@@ -67,6 +67,30 @@ def in_playable_area(x: int, y: int, nw: Sequence[int], se: Sequence[int]) -> bo
     return int(nw[0]) <= int(x) < int(se[0]) and int(nw[1]) <= int(y) < int(se[1])
 
 
+def in_excluded_boxes(x: int, y: int, exclude_boxes: Iterable[dict] | None) -> bool:
+    """判定 (x, y) 是否落入任意矩形排除区（用于剔除矩形盒切到的南法/巴尔干等非目标区域）。"""
+    if not exclude_boxes:
+        return False
+    ix, iy = int(x), int(y)
+    for box in exclude_boxes:
+        bnw = box.get("nw")
+        bse = box.get("se")
+        if bnw and bse and in_playable_area(ix, iy, bnw, bse):
+            return True
+    return False
+
+
+def is_hex_included(
+    x: int,
+    y: int,
+    nw: Sequence[int],
+    se: Sequence[int],
+    exclude_boxes: Iterable[dict] | None = None,
+) -> bool:
+    """判定 (x, y) 是否既在主可玩区内，又不在任何排除区内。"""
+    return in_playable_area(x, y, nw, se) and not in_excluded_boxes(x, y, exclude_boxes)
+
+
 def validate_husky_geometry(husky_cfg: dict) -> list[str]:
     """核对配置文件中的 Husky 两栖海滩与空降目标在 shape2 下的邻接关系。"""
     errors: list[str] = []

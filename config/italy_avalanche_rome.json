@@ -16,6 +16,29 @@
   "map_nw_limit": [122, 246],
   "map_se_limit": [172, 296],
   "playable_bounds_note": "实际可玩区 X: 122..171 (50列), Y: 246..295 (50行)，合计 2,500 格，较全图削减 98.14% 面积。",
+  "exclude_boxes": [],
+  "events_policy": {
+    "disable_italian_armistice": true,
+    "disable_event_ids": [24, 78, 9, 11, 93, 94, 114, 136, 241],
+    "disable_title_keywords": [
+      "Berlin",
+      "Soviet",
+      "SU Retakes",
+      "Finland",
+      "Rumania",
+      "Hungary",
+      "Bulgaria",
+      "Slovakia",
+      "Norway",
+      "D-Day",
+      "Normandy",
+      "Paris",
+      "Cobra",
+      "Eastern Front",
+      "Italy Surrenders"
+    ],
+    "note": "1943-09-09 开局已过意大利停战节点，停用停战与东线/西欧/巴尔干无关事件。"
+  },
   "high_command_anchor": {
     "axis": {
       "preferred_city": "Rome / North Edge",

@@ -112,6 +112,26 @@
 14. **证据边界铁律（给 AI 看的最高纪律）**  
     - 跑通 Python 静态检查和 CSV 校验，**只代表数据结构合法，不代表 WitE2 实机运行一定不崩溃或平衡正确**。任何未在 `WarInTheEast2.exe` 实机跑过 T1 后勤与战斗阶段的功能，文档与汇报中必须诚实标明“待实机验证”。
 
+### 3.2 v1.05.02 New Editor 与真实 `v0.9.60` 数据实测补坑（第 15~19 条）
+
+15. **New Editor (v1.04.19+/v1.05.02) 导出结构彻底变了**  
+    - **实测结果**：不再是旧版 `Dat/CSV/<prefix>_unit.csv` 扁平命名，而是导出到 `Dat/CSV/<ScenarioName>/` 子目录，固定 **20 个 PascalCase 文件**（`Units.csv`, `Locations.csv`, `AirGroups.csv`, `AOGs.csv`, `GameEvents.csv`, `Nations.csv`, `Pilots.csv` 等）。  
+    - **安全停用方式**：官方 `Introductory Scenario 1 - Velikie Luki/Units.csv` 无空名行，停用框外单位必须**保留 `ID`/`Name`**，把 `X=0, Y=0, ArriveX=0, ArriveY=0, Delay=250, TheaterBox=0`。
+
+16. **AirBase（`HQ=5`）在 `Units.csv` 里坐标永远是 `(0, 0)`！**  
+    - **实测血坑**：在 `Units.csv` 中所有机场单位 `X=0, Y=0`，如果只按 `Units.csv` 坐标裁剪，会把框内全部 55~173 座机场和所有航空队连根拔起！  
+    - **正确做法**：必须先读 `Locations.csv`，用 `Locations.AbUnit == Units.ID` 反查机场所在城市的 `(X, Y)`，把框内机场纳入保留集合后再筛 `AirGroups.csv`。
+
+17. **北非集结港西延至 `X=59`，不能只框 `X>=104`**  
+    - **实测结果**：`WITW+WITE v0.9.60` 中，盟军 AFHQ `(86,295)`、TF 81 + 美第 1 师 `(64,300)`、TF 85 + 美第 45 师 `(68,299)`、TF 86 `(85,295)` 与北非法军分布在阿尔及利亚/突尼斯一线（`X=59..150, Y=293..310`）。  
+    - **双层裁剪法**：把 `NW_x` 设为 `57` 保住全部北非出发港，同时在配置里用 `exclude_boxes` 挖掉矩形左上角的南法/西班牙 (`[57..108, 208..274]`)、右上角的巴尔干 (`[147..176, 208..252]`) 或小剧本的撒丁岛南缘。
+
+18. **`ISO-8859-1` 编码坑与 `GameEvents.csv` 变长尾列坑**  
+    - **事实来源**：`mlshort/wite2_tools` 与本地 `Dat/CSV/WITW+WITE v0.9.60/` 实测。`Pilots.csv` 含 `ISO-8859-1`（Latin-1）字符，强行用 UTF-8 解码会报错；`GameEvents.csv` 只有前 18 列有表头，后面跟着长短不一的 `<cnd>`/`<actSet>` 块（实测每行 20~199 列不等），**严禁用 `csv.DictReader` 读写 `GameEvents.csv`**，必须用 `csv.reader`/`csv.writer` 按列表流式改 `evActive`（第 12 列）。
+
+19. **与开源工具 `mlshort/wite2_tools` 的联合体检工作流**  
+    - 本项目负责“地图裁剪 + `AbUnit` 机场联动 + `exclude_boxes` + 事件停用 + Husky `shape2` 校验”；社区工具 `mlshort/wite2_tools` 擅长“数据库深度体检”。建议在裁剪后、导入编辑器前，配合使用其 `audit-batch`（查 Ghost Squads 与重复 ID）、`gen-chains` / `gen-orphans --nat-codes 1 3`（核对德意编制升级链未断）和 `scan-excess`（检查开局超额油弹补给）。
+
 ---
 
 ## 4. 给后续 AI 接手的标准工作流 (Quickstart for AI Agents)
@@ -125,11 +145,11 @@
    python -m unittest discover -s tests -v
    ```
 3. **新增或修改一个意大利局部小剧本**：
-   - 在 `config/` 下新建配置文件，指定 `map_nw_limit`、`map_se_limit`（记住 SE-1 规则）、`high_command_anchor` 和 `victory_objectives`。
-   - 从 WitE2 编辑器导出基线 `.scn` 的全套 CSV 后，执行：
+   - 在 `config/` 下新建配置文件，指定 `map_nw_limit`、`map_se_limit`（记住 SE-1 规则）、`exclude_boxes`、`events_policy`、`high_command_anchor` 和 `victory_objectives`。
+   - 从 WitE2 **New Editor** 导出基线 `.scn` 的 20 文件 CSV 子目录后，执行：
      ```powershell
-     python tools/crop_csv.py --input-dir <导出CSV目录> --prefix "<剧本前缀>" --config config/<你的配置>.json --output-dir output/<目标目录> --relocate-offmap-hqs --report output/<目标目录>/crop_report.md
-     python tools/validate_csv.py --input-dir output/<目标目录> --prefix "<剧本前缀>" --config config/<你的配置>.json
+     python tools/crop_csv.py --input-dir "<游戏目录>\Dat\CSV\WITW+WITE v0.9.60" --config config/<你的配置>.json --output-dir output/<目标目录> --relocate-offmap-hqs --report output/<目标目录>/crop_report.md
+     python tools/validate_csv.py --input-dir output/<目标目录> --config config/<你的配置>.json
      ```
-4. **回灌编辑器与收尾**：严格按照 [docs/EDITOR_WORKFLOW.md](docs/EDITOR_WORKFLOW.md) 完成 `Import CSV`、`Main Tab` 参数设置、`DAMAGE OFF-MAP RAIL`、`INIT RAIL/PORT VALUES` 与 `SCENARIO CHECK UTILITY`。
+4. **回灌编辑器与收尾**：严格按照 [docs/EDITOR_WORKFLOW.md](docs/EDITOR_WORKFLOW.md) 完成 `Import from CSV`、`Main Tab` 参数设置、`DAMAGE OFF-MAP RAIL`、`INIT RAIL/PORT VALUES` 与 `SCENARIO CHECK UTILITY`。
 5. **更新记录**：每次实质改动同步更新 `CHANGELOG.md`，并忠实区分“静态校验通过项”与“实机测试通过项”。

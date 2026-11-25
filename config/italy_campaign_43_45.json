@@ -14,9 +14,21 @@
     "height": 355,
     "total_hexes": 134190
   },
-  "map_nw_limit": [104, 208],
+  "map_nw_limit": [57, 208],
   "map_se_limit": [176, 318],
-  "playable_bounds_note": "WitE2 Map SE Limit 实际生效范围为 [NW_x .. SE_x - 1, NW_y .. SE_y - 1]，即 X: 104..175 (72列), Y: 208..317 (110行)，合计 7,920 格，较全图削减 94.10% 面积。",
+  "playable_bounds_note": "WitE2 Map SE Limit 实际生效范围为 [NW_x .. SE_x - 1, NW_y .. SE_y - 1]，即 X: 57..175 (119列), Y: 208..317 (110行)，合计 13,090 格，较全图削减 90.25% 面积；西延至 X=57 容纳全部北非登陆出发港，并结合 exclude_boxes 剔除南法/西班牙与巴尔干无关单位。",
+  "exclude_boxes": [
+    {
+      "name": "Southern France & Spain",
+      "nw": [57, 208],
+      "se": [108, 274]
+    },
+    {
+      "name": "Balkans & Eastern Austria",
+      "nw": [147, 208],
+      "se": [176, 252]
+    }
+  ],
   "high_command_anchor": {
     "axis": {
       "preferred_city": "Bologna / Verona",
@@ -24,10 +36,31 @@
       "note": "原 OKH/OKW 位于柏林等框外城市，裁剪后须迁入北意重镇以免编辑器居中及指挥链报错"
     },
     "allied": {
-      "preferred_city": "Tunis / Bizerte",
+      "preferred_city": "AFHQ / Tunis",
       "xy": [126, 297],
-      "note": "AFHQ / 西方盟军高司锚点设为突尼斯（若原处于阿尔及尔或伦敦等框外点则迁移至此）"
+      "note": "AFHQ 原处于 (86,295) 已在 X>=57 框内，其余伦敦/英国框外祖先 HQ 迁移至此"
     }
+  },
+  "events_policy": {
+    "disable_italian_armistice": false,
+    "disable_event_ids": [78, 9, 11, 93, 94, 114, 136, 241],
+    "disable_title_keywords": [
+      "Berlin",
+      "Soviet",
+      "SU Retakes",
+      "Finland",
+      "Rumania",
+      "Hungary",
+      "Bulgaria",
+      "Slovakia",
+      "Norway",
+      "D-Day",
+      "Normandy",
+      "Paris",
+      "Cobra",
+      "Eastern Front"
+    ],
+    "note": "保留 id=24 (Italy Surrenders)、id=3 (Western on-map campaign) 及盟军/德军补员事件，停用柏林陷落及东线/巴尔干/北欧无关事件。"
   },
   "theatre_boxes": {
     "active_map_only": true,

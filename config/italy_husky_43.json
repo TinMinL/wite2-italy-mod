@@ -13,24 +13,50 @@
     "height": 355,
     "total_hexes": 134190
   },
-  "map_nw_limit": [118, 275],
+  "map_nw_limit": [57, 275],
   "map_se_limit": [166, 314],
-  "playable_bounds_note": "实际可玩区 X: 118..165 (48列), Y: 275..313 (39行)，合计 1,872 格，较全图削减 98.60% 面积。",
+  "playable_bounds_note": "实际可玩区 X: 57..165 (109列), Y: 275..313 (39行)，合计 4,251 格，较全图削减 96.83% 面积；西延至 X=57 以完整容纳突尼斯/阿尔及利亚北非集结港与全部 6 支两栖 TF。",
+  "exclude_boxes": [
+    {
+      "name": "Southern Sardinia Edge",
+      "nw": [110, 275],
+      "se": [125, 282]
+    }
+  ],
   "high_command_anchor": {
     "axis": {
       "preferred_city": "Messina / Reggio Calabria",
       "xy": [156, 285],
-      "note": "小剧本轴心高司锚点置于卡拉布里亚雷焦（156,285）或墨西拿，确保全 HQ 链在 48x39 框内"
+      "note": "小剧本轴心高司锚点置于卡拉布里亚雷焦（156,285）或墨西拿，确保全 HQ 链在有效框内"
     },
     "allied": {
-      "preferred_city": "Tunis / Bizerte",
+      "preferred_city": "AFHQ / Tunis",
       "xy": [126, 297],
-      "note": "AFHQ / 15th Army Group 位于突尼斯/比塞大方向"
+      "note": "AFHQ (86,295) 与突尼斯均已落在 X>=57 框内"
     }
   },
   "events_policy": {
     "disable_italian_armistice": true,
-    "note": "8 回合西西里小剧本应停用 1943 年 9 月 8 日意大利停战自动撤军事件，防止尾声回合意军整建制消失影响独立评分。"
+    "disable_event_ids": [24, 78, 9, 11, 93, 94, 114, 136, 241],
+    "disable_title_keywords": [
+      "Berlin",
+      "Soviet",
+      "SU Retakes",
+      "Finland",
+      "Rumania",
+      "Hungary",
+      "Bulgaria",
+      "Slovakia",
+      "Norway",
+      "D-Day",
+      "Normandy",
+      "Paris",
+      "Cobra",
+      "Eastern Front",
+      "Italy Surrenders",
+      "Germany Fully Mobilizes"
+    ],
+    "note": "8 回合西西里小剧本应停用 1943 年 9 月 8 日意大利停战事件及东线/西欧/巴尔干事件，仅保留开局简报与地中海西线基础事件。"
   },
   "husky_validation": {
     "board_shape": 2,
